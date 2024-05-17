@@ -1,4 +1,4 @@
-import {useCallback, useState} from 'react'
+import {useCallback, useState, WheelEvent as ReactWheelEvent} from 'react'
 
 export const useScreenListeners = () => {
   const [posY, setPosY] = useState(0)
@@ -50,12 +50,20 @@ export const useScreenListeners = () => {
       }
     })
   }
+  const onZoom = (event: ReactWheelEvent<HTMLElement>) => {
+    if (!event.ctrlKey) return event.preventDefault()
+
+    const ZOOM_SENSITIVITY = 200
+    const zoomAmount = -(event.deltaY / ZOOM_SENSITIVITY)
+    setZoom(zoom => toFixed(Math.max(Math.min(zoom + zoomAmount, 2), 0.2)))
+  }
 
   return {
     placeScreens,
     scrollPage,
     setPageInitialDimensions,
     updateSize,
+    onZoom,
     posX,
     posY,
     zoom,

@@ -29,6 +29,7 @@ function App() {
     updateSize,
     placeScreens,
     scrollPage,
+    onZoom,
     posX,
     posY,
     zoom,
@@ -52,7 +53,9 @@ function App() {
   }, [placeScreens, scrollPage, updateSize])
 
   return (
-    <main className='w-screen relative bg-neutral h-screen flex overflow-hidden'>
+    <main
+      className='w-screen relative bg-neutral h-screen flex overflow-hidden'
+      onWheel={event => onZoom(event)}>
       <SidebarToggle />
 
       <div className='flex min-w-full h-screen overflow-hidden relative '>
