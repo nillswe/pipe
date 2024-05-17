@@ -2,7 +2,7 @@ import {useEffect} from 'react'
 import {DeviceScreen} from './components'
 import {ViewportContainer, ZoomContainer} from './components/containers'
 import {useScreenListeners} from './hooks/use-screen-listeners'
-import {SidebarToggle} from './components/sidebar'
+import {Sidebar} from './components/sidebar'
 
 const screens = [
   {
@@ -56,7 +56,7 @@ function App() {
     <main
       className='w-screen relative bg-neutral h-screen flex overflow-hidden'
       onWheel={event => onZoom(event)}>
-      <SidebarToggle />
+      <Sidebar />
 
       <div className='flex min-w-full h-screen overflow-hidden relative '>
         <ViewportContainer posX={posX} posY={posY}>

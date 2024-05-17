@@ -35,7 +35,7 @@ export default {
     themes: [
       {
         pipe: {
-          'primary': '#9d00ff',
+          'primary': '#00ff8c',
 
           'secondary': '#04a6df',
 

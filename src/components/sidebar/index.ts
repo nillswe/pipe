@@ -1,1 +1,1 @@
-export * from './sidebar-toggle'
+export * from './sidebar'
