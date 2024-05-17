@@ -1,6 +1,5 @@
 import {merge} from '@/utils'
 import {X, Menu} from 'lucide-react'
-import {ReactNode} from 'react'
 
 type Props = {
   isOpen: boolean
