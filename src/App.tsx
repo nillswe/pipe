@@ -1,5 +1,7 @@
-import {useEffect, useState} from 'react'
+import {useCallback, useEffect, useState} from 'react'
 import {DeviceScreen} from './components'
+import {ViewportContainer, ZoomContainer} from './components/containers'
+import {useScreenListeners} from './hooks/use-screen-listeners'
 
 const screens = [
   {
@@ -21,50 +23,47 @@ const screens = [
 ]
 
 function App() {
-  const [posY, setPosY] = useState(0)
-  const [posX, setPosX] = useState(0)
+  const {
+    setPageInitialDimensions,
+    updateSize,
+    placeScreens,
+    scrollPage,
+    posX,
+    posY,
+    zoom,
+  } = useScreenListeners()
 
   useEffect(() => {
-    const screens = document.querySelectorAll('[id^=screen-]')
-
-    console.log({screens})
-
-    screens.forEach((screen, index) => {
-      if (index === 0) {
-        screen.style.left = '40px'
-      } else {
-        const prevScreen = screens[index - 1]
-        const newPos = prevScreen.offsetLeft + prevScreen.offsetWidth + 40
-        screen.style.left = `${newPos}px`
-      }
-    })
-  }, [])
+    const {width, height} = document.body.getBoundingClientRect()
+    setPageInitialDimensions({width, height})
+  }, [setPageInitialDimensions])
 
   useEffect(() => {
-    document.addEventListener('wheel', scroll => {
-      setPosX(prev => prev + scroll.wheelDeltaX)
-      setPosY(prev => prev + scroll.wheelDeltaY)
-    })
-  }, [])
+    placeScreens()
+
+    document.addEventListener('wheel', scrollPage)
+    window.addEventListener('resize', updateSize)
+
+    return () => {
+      window.removeEventListener('resize', updateSize)
+      document.removeEventListener('wheel', scrollPage)
+    }
+  }, [placeScreens, scrollPage, updateSize])
 
   return (
-    <main className='w-full bg-neutral h-full flex overflow-hidden'>
-      {/* CANVAS */}
-      <div className='flex min-w-full h-screen overflow-hidden relative'>
-        {/* VIEWPORT */}
-        <div
-          style={{
-            transform: `translate3d(${posX}px, ${posY}px, 0px)`,
-          }}>
-          {screens.map((screen, index) => (
-            <DeviceScreen
-              key={screen.id}
-              src='http://localhost:3000/app'
-              screen={screen}
-              prevScreen={screens[index - 1]}
-            />
-          ))}
-        </div>
+    <main className='w-screen bg-neutral h-screen flex overflow-hidden'>
+      <div className='flex min-w-full h-screen overflow-hidden relative '>
+        <ViewportContainer posX={posX} posY={posY}>
+          <ZoomContainer zoom={zoom}>
+            {screens.map(screen => (
+              <DeviceScreen
+                key={screen.id}
+                src='http://localhost:3000/app'
+                screen={screen}
+              />
+            ))}
+          </ZoomContainer>
+        </ViewportContainer>
       </div>
     </main>
   )

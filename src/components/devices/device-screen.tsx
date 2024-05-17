@@ -8,10 +8,9 @@ type Screen = {
 type Props = {
   src: string
   screen: Screen
-  prevScreen: Screen | undefined
 }
 
-export const DeviceScreen = ({src, screen, prevScreen}: Props) => {
+export const DeviceScreen = ({src, screen}: Props) => {
   return (
     <div
       id={`screen-${screen.id}`}
@@ -20,8 +19,8 @@ export const DeviceScreen = ({src, screen, prevScreen}: Props) => {
         width: screen.width,
         height: screen.height,
         top: '40px',
-        // transform: 'scale(0.8)',
-        // transformOrigin: '0px 0px',
+        transform: 'scale(0.8)',
+        transformOrigin: '0px 0px',
       }}>
       <div
         className='h-full w-full overflow-hidden'
