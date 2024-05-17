@@ -1,7 +1,8 @@
-import {useCallback, useEffect, useState} from 'react'
+import {useEffect} from 'react'
 import {DeviceScreen} from './components'
 import {ViewportContainer, ZoomContainer} from './components/containers'
 import {useScreenListeners} from './hooks/use-screen-listeners'
+import {SidebarToggle} from './components/sidebar'
 
 const screens = [
   {
@@ -51,7 +52,9 @@ function App() {
   }, [placeScreens, scrollPage, updateSize])
 
   return (
-    <main className='w-screen bg-neutral h-screen flex overflow-hidden'>
+    <main className='w-screen relative bg-neutral h-screen flex overflow-hidden'>
+      <SidebarToggle />
+
       <div className='flex min-w-full h-screen overflow-hidden relative '>
         <ViewportContainer posX={posX} posY={posY}>
           <ZoomContainer zoom={zoom}>
