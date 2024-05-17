@@ -4,7 +4,31 @@ import daisyui from 'daisyui'
 export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
-    extend: {},
+    extend: {
+      transitionTimingFunction: {
+        'ease-out-sidebar': 'cubic-bezier(.6,.32,.21,.99)',
+      },
+      keyframes: {
+        fadeUp: {
+          '0%': {
+            transform: 'translateY(100%)',
+            opacity: '0',
+          },
+          '100%': {transform: 'translateY(0%)', opacity: '1'},
+        },
+        fadeDown: {
+          '0%': {transform: 'translateY(-100%)', opacity: '0'},
+          '100%': {
+            transform: 'translateY(0%)',
+            opacity: '1',
+          },
+        },
+      },
+      animation: {
+        fadeUp: 'fadeUp 1s ease-in-out forwards',
+        fadeDown: 'fadeDown 1s ease-in-out forwards',
+      },
+    },
   },
   plugins: [daisyui],
   daisyui: {
@@ -17,7 +41,7 @@ export default {
 
           'accent': '#38bdf8',
 
-          'neutral': '#111827',
+          'neutral': '#0c111c',
 
           'base-100': '#f7f6f6',
 
