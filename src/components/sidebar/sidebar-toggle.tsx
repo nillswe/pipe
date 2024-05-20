@@ -19,12 +19,15 @@ export const SidebarToggle = ({isOpen, toggle}: Props) => {
       {isOpen ? (
         <X
           size={22}
-          className={merge(['text-base-content', isOpen && 'animate-fadeUp'])}
+          className={merge(['text-neutral', isOpen && 'animate-fadeUp'])}
         />
       ) : (
         <Menu
           size={22}
-          className={merge(['text-base-100', !isOpen && 'animate-fadeDown '])}
+          className={merge([
+            'text-base-content',
+            !isOpen && 'animate-fadeDown ',
+          ])}
         />
       )}
     </div>

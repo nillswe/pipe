@@ -54,7 +54,7 @@ function App() {
 
   return (
     <main
-      className='w-screen relative bg-neutral h-screen flex overflow-hidden'
+      className='w-screen relative bg-base h-screen flex overflow-hidden'
       onWheel={event => onZoom(event)}>
       <Sidebar />
 

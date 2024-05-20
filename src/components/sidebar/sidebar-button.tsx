@@ -11,7 +11,7 @@ export const SidebarButton = ({children, isOpen, delay}: Props) => {
   return (
     <button
       className={merge([
-        'btn btn-md btn-square btn-ghost focus:text-primary active:text-primary opacity-0 text-base-100',
+        'btn btn-md btn-square btn-ghost focus:text-primary active:text-primary opacity-0 text-base-content',
         isOpen && 'animate-fadeUp',
       ])}
       style={{
