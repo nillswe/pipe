@@ -22,21 +22,23 @@ export const Sidebar = () => {
             'transition-all duration-[700ms] ease-[cubic-bezier(.38,.58,.21,.99)]',
             on && 'h-[calc(100vh-40px)] w-16',
           ])}>
-          <div className={merge(['flex flex-col items-center gap-2 flex-1'])}>
-            <Logo startAnimation={on} />
+          <div
+            className={merge([
+              'flex flex-col items-center gap-2 flex-1',
+              on &&
+                '[&>button>svg]:animate-fadeUp [&>h1]:animate-fadeUp [&>*:nth-child(1)>h1]:[animation-delay:100ms] [&>*:nth-child(2)>svg]:[animation-delay:200ms] [&>*:nth-child(3)>svg]:[animation-delay:300ms] [&>*:nth-child(4)>svg]:[animation-delay:400ms]',
+            ])}>
+            <Logo />
 
-            <SidebarButton isOpen={on} delay={100}>
-              <Link2 size={20} onClick={() => toggleLinkModal()} />
+            <SidebarButton onClick={() => toggleLinkModal()}>
+              <Link2 size={20} />
             </SidebarButton>
 
-            <SidebarButton isOpen={on} delay={200}>
-              <MonitorSmartphone
-                size={20}
-                onClick={() => toggleDevicesModal()}
-              />
+            <SidebarButton onClick={() => toggleDevicesModal()}>
+              <MonitorSmartphone size={20} />
             </SidebarButton>
 
-            <SidebarButton isOpen={on} delay={300}>
+            <SidebarButton>
               <Maximize2 size={20} />
             </SidebarButton>
           </div>

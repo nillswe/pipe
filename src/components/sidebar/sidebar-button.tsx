@@ -3,21 +3,17 @@ import {ReactNode} from 'react'
 
 type Props = {
   children: ReactNode
-  isOpen: boolean
-  delay: number
+  onClick?: () => void
 }
 
-export const SidebarButton = ({children, isOpen, delay}: Props) => {
+export const SidebarButton = ({children, onClick}: Props) => {
   return (
     <button
       type='button'
+      onClick={onClick}
       className={merge([
-        'btn btn-md btn-square btn-ghost focus:text-primary active:text-primary opacity-1 text-base-content focus:animate-none active:animate-none ',
-        isOpen && 'animate-fadeUp',
-      ])}
-      style={{
-        animationDelay: `${delay}ms`,
-      }}>
+        'btn btn-md btn-square btn-ghost focus:text-primary active:text-primary text-base-content  [&>svg]:opacity-0',
+      ])}>
       {children}
     </button>
   )
