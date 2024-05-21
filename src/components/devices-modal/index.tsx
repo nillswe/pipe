@@ -31,7 +31,7 @@ export const DevicesModal = ({isOpen, onClose}: Props) => {
               <div
                 key={device.id}
                 onClick={() => onToggleDevice(device)}
-                className='flex flex-col w-full text-center items-center bg-base-300 p-2 rounded-md'>
+                className='flex flex-col w-full text-center items-center bg-base-300 p-2 rounded-md hover:bg-base-content hover:text-base-100 cursor-pointer'>
                 <span>
                   {device.type === 'Smartphone' && <Smartphone size={22} />}
                   {device.type === 'Laptop' && <LaptopMinimal size={22} />}
