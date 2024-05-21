@@ -1,4 +1,6 @@
 import {devices} from '@/constants/devices'
+import {appStore} from '@/store/app-store'
+import {Device} from '@/types'
 import {merge} from '@/utils'
 import {LaptopMinimal, Monitor, Smartphone, Tablet, X} from 'lucide-react'
 
@@ -8,7 +10,9 @@ type Props = {
 }
 
 export const DevicesModal = ({isOpen, onClose}: Props) => {
-  const onSubmit = () => {}
+  const onToggleDevice = (device: Device) => {
+    appStore.addDevice(device)
+  }
 
   return (
     <dialog className={merge(['modal', isOpen && 'modal-open'])}>
@@ -22,7 +26,10 @@ export const DevicesModal = ({isOpen, onClose}: Props) => {
         <div className='w-full grid grid-cols-5 gap-5'>
           {devices.map(device => {
             return (
-              <div className='flex flex-col w-full text-center items-center bg-base-300 p-2 rounded-md'>
+              <div
+                key={device.id}
+                onClick={() => onToggleDevice(device)}
+                className='flex flex-col w-full text-center items-center bg-base-300 p-2 rounded-md'>
                 <span>
                   {device.type === 'Smartphone' && <Smartphone size={22} />}
                   {device.type === 'Laptop' && <LaptopMinimal size={22} />}
@@ -35,12 +42,9 @@ export const DevicesModal = ({isOpen, onClose}: Props) => {
           })}
         </div>
 
-        <div className='modal-action  w-full flex'>
-          <button className='btn btn-neutral ' onClick={onSubmit}>
+        <div className='modal-action  w-full flex border-t pt-5 border-neutral/10'>
+          <button className='btn btn-neutral btn-wide' onClick={onClose}>
             Close
-          </button>
-          <button className='btn btn-primary w-28 ' onClick={onSubmit}>
-            Save
           </button>
         </div>
       </div>

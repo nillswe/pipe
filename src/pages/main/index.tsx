@@ -6,25 +6,6 @@ import {appStore} from '@/store/app-store'
 import {observer} from 'mobx-react-lite'
 import {useEffect} from 'react'
 
-const screens = [
-  {
-    id: 'mobile-generic',
-    width: 414,
-    height: 896,
-  },
-  {
-    id: 'desktop-generic',
-    width: 1440,
-    height: 900,
-  },
-
-  {
-    id: 'tablet-generic',
-    width: 960,
-    height: 900,
-  },
-]
-
 export const MainPage = observer(() => {
   const {
     setPageInitialDimensions,
@@ -36,6 +17,8 @@ export const MainPage = observer(() => {
     posY,
     zoom,
   } = useScreenListeners()
+
+  const {devices} = appStore
 
   useEffect(() => {
     const {width, height} = document.body.getBoundingClientRect()
@@ -63,11 +46,11 @@ export const MainPage = observer(() => {
       <div className='flex min-w-full h-screen overflow-hidden relative '>
         <ViewportContainer posX={posX} posY={posY}>
           <ZoomContainer zoom={zoom}>
-            {screens.map(screen => (
+            {devices.map(device => (
               <DeviceScreen
-                key={screen.id + appStore.url}
+                key={device.id + appStore.url}
                 src={appStore.url}
-                screen={screen}
+                screen={device}
               />
             ))}
           </ZoomContainer>

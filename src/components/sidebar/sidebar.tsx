@@ -26,7 +26,7 @@ export const Sidebar = () => {
             className={merge([
               'flex flex-col items-center gap-2 flex-1',
               on &&
-                '[&>button>svg]:animate-fadeUp [&>h1]:animate-fadeUp [&>*:nth-child(1)>h1]:[animation-delay:100ms] [&>*:nth-child(2)>svg]:[animation-delay:200ms] [&>*:nth-child(3)>svg]:[animation-delay:300ms] [&>*:nth-child(4)>svg]:[animation-delay:400ms]',
+                '[&>button>svg]:animate-fadeUp [&>h1]:animate-fadeUp [&>*:nth-child(1)]:[animation-delay:100ms] [&>*:nth-child(2)>svg]:[animation-delay:200ms] [&>*:nth-child(3)>svg]:[animation-delay:300ms] [&>*:nth-child(4)>svg]:[animation-delay:400ms]',
             ])}>
             <Logo />
 
@@ -47,7 +47,7 @@ export const Sidebar = () => {
         <SidebarToggle isOpen={on} toggle={toggle} />
       </div>
       <SetLinkModal isOpen={isLinkModalOpen} onClose={toggleLinkModal} />
-      <DevicesModal isOpen={isDevicesModalOpen} onClose={toggleLinkModal} />
+      <DevicesModal isOpen={isDevicesModalOpen} onClose={toggleDevicesModal} />
     </>
   )
 }
