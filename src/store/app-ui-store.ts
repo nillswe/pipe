@@ -86,7 +86,12 @@ export class AppUIStore {
   }
 
   scrollPage(scroll: WheelEvent) {
-    this.setViewportPos({x: scroll.deltaX, y: scroll.deltaY})
+    console.log({scroll})
+
+    this.setViewportPos({
+      x: this.viewportPos.x + scroll.deltaX * -1,
+      y: this.viewportPos.y + scroll.deltaY * -1,
+    })
   }
 
   placeScreens() {
