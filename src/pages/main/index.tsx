@@ -22,8 +22,8 @@ export const MainPage = observer(() => {
   const {devices} = appStore
 
   useEffect(() => {
-    const {width, height} = document.body.getBoundingClientRect()
-    setPageInitialDimensions({width, height})
+    const {availWidth, availHeight} = window.screen
+    setPageInitialDimensions({width: availWidth, height: availHeight})
   }, [setPageInitialDimensions])
 
   useEffect(() => {
@@ -64,7 +64,7 @@ export const MainPage = observer(() => {
                 <DeviceScreen
                   key={device.id + appStore.url}
                   src={appStore.url}
-                  screen={device}
+                  device={device}
                 />
               ))}
             </ZoomContainer>
