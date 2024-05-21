@@ -1,14 +1,16 @@
 import {useToggle} from '@uidotdev/usehooks'
-import {Link2, Maximize2, MonitorSmartphone, Rows3} from 'lucide-react'
+import {Link2, Maximize2, MonitorSmartphone} from 'lucide-react'
 import {SidebarButton} from '@/components/sidebar/sidebar-button'
 import {SidebarToggle} from '@/components/sidebar/sidebar-toggle'
 import {merge} from '@/utils'
 import {Logo} from '@/components/brand/logo'
 import {SetLinkModal} from '@/components/set-link-modal'
+import {DevicesModal} from '@/components/devices-modal'
 
 export const Sidebar = () => {
   const [on, toggle] = useToggle(false)
   const [isLinkModalOpen, toggleLinkModal] = useToggle(false)
+  const [isDevicesModalOpen, toggleDevicesModal] = useToggle(false)
 
   return (
     <>
@@ -28,15 +30,14 @@ export const Sidebar = () => {
             </SidebarButton>
 
             <SidebarButton isOpen={on} delay={200}>
-              <MonitorSmartphone size={20} />
+              <MonitorSmartphone
+                size={20}
+                onClick={() => toggleDevicesModal()}
+              />
             </SidebarButton>
 
             <SidebarButton isOpen={on} delay={300}>
               <Maximize2 size={20} />
-            </SidebarButton>
-
-            <SidebarButton isOpen={on} delay={400}>
-              <Rows3 size={20} />
             </SidebarButton>
           </div>
         </div>
@@ -44,6 +45,7 @@ export const Sidebar = () => {
         <SidebarToggle isOpen={on} toggle={toggle} />
       </div>
       <SetLinkModal isOpen={isLinkModalOpen} onClose={toggleLinkModal} />
+      <DevicesModal isOpen={isDevicesModalOpen} onClose={toggleLinkModal} />
     </>
   )
 }
