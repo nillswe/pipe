@@ -1,16 +1,48 @@
-import {makeAutoObservable} from 'mobx'
+import {autorun, makeAutoObservable} from 'mobx'
+import {WheelEvent as ReactWheelEvent} from 'react'
+
+type ViewportPosition = {
+  x: number
+  y: number
+}
+
+type WindowDimensions = {
+  width: number
+  height: number
+}
 
 export class AppUIStore {
   scale: number = 0.8
   screenPaddingY: number = 40
   screenPaddingX: number = 40
+  viewportPos: ViewportPosition = {x: 0, y: 0}
+  zoom: number = 1
+  windowDimensions: WindowDimensions = {width: 0, height: 0}
+  screenDimensions: WindowDimensions = {width: 0, height: 0}
 
   constructor() {
     makeAutoObservable(this)
+
+    autorun(() => {
+      const {availWidth, availHeight} = window.screen
+      this.setScreenDimensions({width: availWidth, height: availHeight})
+    })
   }
 
   setScale(scale: number) {
     this.scale = scale
+  }
+
+  setZoom(zoom: number) {
+    this.zoom = zoom
+  }
+
+  setViewportPos(position: ViewportPosition) {
+    this.viewportPos = position
+  }
+
+  setScreenDimensions(dimensions: WindowDimensions) {
+    this.screenDimensions = dimensions
   }
 
   private calcDeviceHeightWithSpaces(device: Element) {
@@ -38,6 +70,49 @@ export class AppUIStore {
     const newScale = (screenHeight / biggestDeviceInHeight) * this.scale
 
     this.setScale(newScale)
+  }
+
+  updateSize() {
+    const curPageDimensions = document.body.getBoundingClientRect()
+
+    const percentageWidth =
+      curPageDimensions.width / this.screenDimensions.width
+    const percentageHeigh =
+      curPageDimensions.height / this.screenDimensions.height
+
+    this.setZoom(Math.min(Math.min(percentageWidth, percentageHeigh), 1))
+
+    this.setViewportPos({x: 0, y: 0})
+  }
+
+  scrollPage(scroll: WheelEvent) {
+    this.setViewportPos({x: scroll.deltaX, y: scroll.deltaY})
+  }
+
+  placeScreens() {
+    const screens = document.querySelectorAll<HTMLDivElement>('[id^=screen-]')
+
+    screens.forEach((screen, index) => {
+      if (index === 0) {
+        screen.style.left = `${this.screenPaddingX}px`
+      } else {
+        const prevScreen = screens[index - 1]
+        const newPos =
+          prevScreen.offsetLeft +
+          prevScreen.offsetWidth * this.scale +
+          this.screenPaddingX * this.scale
+
+        screen.style.left = `${newPos}px`
+      }
+    })
+  }
+
+  onZoom = (event: ReactWheelEvent<HTMLElement>) => {
+    if (!event.ctrlKey) return
+
+    const ZOOM_SENSITIVITY = 400
+    const zoomAmount = -(event.deltaY / ZOOM_SENSITIVITY)
+    this.setZoom(Math.max(Math.min(this.zoom + zoomAmount, 2), 0.2))
   }
 }
 

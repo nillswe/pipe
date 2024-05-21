@@ -1,7 +1,6 @@
 import {DeviceScreen} from '@/components'
 import {ViewportContainer, ZoomContainer} from '@/components/containers'
 import {Sidebar} from '@/components/sidebar'
-import {useScreenListeners} from '@/hooks/use-screen-listeners'
 import {appStore} from '@/store/app-store'
 import {appUiStore} from '@/store/app-ui-store'
 import {Info} from 'lucide-react'
@@ -9,46 +8,28 @@ import {observer} from 'mobx-react-lite'
 import {useEffect} from 'react'
 
 export const MainPage = observer(() => {
-  const {
-    setPageInitialDimensions,
-    updateSize,
-    placeScreens,
-    scrollPage,
-    onZoom,
-    posX,
-    posY,
-    zoom,
-  } = useScreenListeners()
-
   const {devices} = appStore
+  const {scale} = appUiStore
 
   useEffect(() => {
-    const {availWidth, availHeight} = window.screen
-    setPageInitialDimensions({width: availWidth, height: availHeight})
-  }, [setPageInitialDimensions])
-
-  useEffect(() => {
-    placeScreens()
-
-    window.addEventListener('wheel', scrollPage)
-    window.addEventListener('resize', updateSize)
+    window.addEventListener('wheel', event => appUiStore.scrollPage(event))
+    window.addEventListener('resize', () => appUiStore.updateSize())
 
     return () => {
-      window.removeEventListener('resize', updateSize)
-      window.removeEventListener('wheel', scrollPage)
+      window.removeEventListener('resize', () => appUiStore.updateSize())
+      window.removeEventListener('wheel', event => appUiStore.scrollPage(event))
     }
-  }, [placeScreens, scrollPage, updateSize])
+  }, [])
 
   useEffect(() => {
-    placeScreens()
-    console.log('placeScreens')
-  }, [appUiStore.scale])
+    appUiStore.placeScreens()
+  }, [scale, devices])
 
   return (
     <main
       id='page-root'
       className='w-screen relative bg-base h-screen flex overflow-hidden'
-      onWheel={event => onZoom(event)}>
+      onWheel={event => appUiStore.onZoom(event)}>
       <Sidebar />
 
       <div
@@ -64,8 +45,10 @@ export const MainPage = observer(() => {
         )}
 
         {devices.length > 0 && (
-          <ViewportContainer posX={posX} posY={posY}>
-            <ZoomContainer zoom={zoom}>
+          <ViewportContainer
+            posX={appUiStore.viewportPos.x}
+            posY={appUiStore.viewportPos.y}>
+            <ZoomContainer zoom={appUiStore.zoom}>
               {devices.map(device => (
                 <DeviceScreen
                   key={device.id + appStore.url}

@@ -16,7 +16,7 @@ export class AppStore {
   }
 
   addDevice(device: Device) {
-    this.devices.push(device)
+    this.devices = [...this.devices, device]
   }
 
   removeDevice(device: Device) {
