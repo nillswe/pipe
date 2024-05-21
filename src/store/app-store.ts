@@ -18,6 +18,15 @@ export class AppStore {
   addDevice(device: Device) {
     this.devices.push(device)
   }
+
+  removeDevice(device: Device) {
+    this.devices = this.devices.filter(elem => elem.id !== device.id)
+  }
+
+  reset() {
+    this.setUrl('')
+    this.devices = []
+  }
 }
 
 export const appStore = new AppStore()

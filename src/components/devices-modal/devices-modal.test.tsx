@@ -1,7 +1,7 @@
 import {DevicesModal} from '@/components/devices-modal'
 import {appStore} from '@/store/app-store'
 import {cleanup, render, screen} from '@testing-library/react'
-import {beforeAll, describe, expect, it} from 'vitest'
+import {beforeEach, describe, expect, it} from 'vitest'
 
 import userEvent from '@testing-library/user-event'
 
@@ -13,8 +13,9 @@ const makeSUT = () => {
 }
 
 describe('DeviceModal', () => {
-  beforeAll(() => {
+  beforeEach(() => {
     cleanup()
+    appStore.reset()
   })
 
   it('should list all available devices', () => {
@@ -35,5 +36,18 @@ describe('DeviceModal', () => {
     await user.click(firstDevice)
 
     expect(appStore.devices.length).toBe(initialDevicesAmount + 1)
+  })
+
+  it('should remove a device from screen when clicked on it', async () => {
+    const {user} = makeSUT()
+    const dialogContent = screen.getByTestId('modal-content')
+    const firstDevice = dialogContent.children[0]
+
+    // add device to the screen
+    await user.click(firstDevice)
+    // remove device from the screen
+    await user.click(firstDevice)
+
+    expect(appStore.devices.length).toBe(0)
   })
 })
