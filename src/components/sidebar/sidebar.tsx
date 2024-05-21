@@ -1,14 +1,15 @@
 import {useToggle} from '@uidotdev/usehooks'
-import {Link2, Maximize2, MonitorSmartphone} from 'lucide-react'
+import {Link2, Maximize, MonitorSmartphone} from 'lucide-react'
 import {SidebarButton} from '@/components/sidebar/sidebar-button'
 import {SidebarToggle} from '@/components/sidebar/sidebar-toggle'
 import {merge} from '@/utils'
 import {Logo} from '@/components/brand/logo'
 import {SetLinkModal} from '@/components/set-link-modal'
 import {DevicesModal} from '@/components/devices-modal'
+import {fitScreenUIStore} from '@/store/fit-screen-ui-store'
 
 export const Sidebar = () => {
-  const [on, toggle] = useToggle(true)
+  const [on, toggle] = useToggle(false)
   const [isLinkModalOpen, toggleLinkModal] = useToggle(false)
   const [isDevicesModalOpen, toggleDevicesModal] = useToggle(false)
 
@@ -43,8 +44,8 @@ export const Sidebar = () => {
             </div>
 
             <div className='tooltip tooltip-right' data-tip='Fit to screen'>
-              <SidebarButton>
-                <Maximize2 size={20} />
+              <SidebarButton onClick={() => fitScreenUIStore.fitToScreen()}>
+                <Maximize size={20} />
               </SidebarButton>
             </div>
           </div>

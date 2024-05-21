@@ -3,6 +3,7 @@ import {ViewportContainer, ZoomContainer} from '@/components/containers'
 import {Sidebar} from '@/components/sidebar'
 import {useScreenListeners} from '@/hooks/use-screen-listeners'
 import {appStore} from '@/store/app-store'
+import {fitScreenUIStore} from '@/store/fit-screen-ui-store'
 import {Info} from 'lucide-react'
 import {observer} from 'mobx-react-lite'
 import {useEffect} from 'react'
@@ -37,6 +38,11 @@ export const MainPage = observer(() => {
       window.removeEventListener('wheel', scrollPage)
     }
   }, [placeScreens, scrollPage, updateSize])
+
+  useEffect(() => {
+    placeScreens()
+    console.log('placeScreens')
+  }, [fitScreenUIStore.scale])
 
   return (
     <main

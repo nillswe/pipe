@@ -1,3 +1,4 @@
+import {fitScreenUIStore} from '@/store/fit-screen-ui-store'
 import {useCallback, useState, WheelEvent as ReactWheelEvent} from 'react'
 
 export const useScreenListeners = () => {
@@ -33,6 +34,8 @@ export const useScreenListeners = () => {
   const placeScreens = () => {
     const screens = document.querySelectorAll<HTMLDivElement>('[id^=screen-]')
 
+    console.log('sdasd', fitScreenUIStore.scale)
+
     screens.forEach((screen, index) => {
       if (index === 0) {
         screen.style.left = '40px'
@@ -40,9 +43,10 @@ export const useScreenListeners = () => {
         const prevScreen = screens[index - 1]
         const newPos =
           prevScreen.offsetLeft +
-          (prevScreen.offsetWidth - prevScreen.offsetWidth * 0.2) +
-          40
+          prevScreen.offsetWidth * fitScreenUIStore.scale +
+          80 * fitScreenUIStore.scale
         screen.style.left = `${newPos}px`
+        console.log({newPos})
       }
     })
   }

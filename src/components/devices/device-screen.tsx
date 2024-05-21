@@ -3,6 +3,7 @@ import {merge} from '../../utils'
 import {observer} from 'mobx-react-lite'
 import {X} from 'lucide-react'
 import {appStore} from '@/store/app-store'
+import {fitScreenUIStore} from '@/store/fit-screen-ui-store'
 
 type Props = {
   src: string
@@ -17,12 +18,12 @@ export const DeviceScreen = observer(({src, device: device}: Props) => {
   return (
     <div
       id={`screen-${device.id}`}
-      className={merge('bg-white flex flex-col absolute border border-primary')}
+      className={merge('bg-white flex flex-col absolute')}
       style={{
         width: device.width,
         height: device.height,
         top: '40px',
-        transform: 'scale(0.8)',
+        transform: `scale(${fitScreenUIStore.scale})`,
         transformOrigin: '0px 0px',
       }}>
       <div className='w-full h-10 bg-base-200 absolute -top-12 flex items-center px-2 justify-between'>
@@ -50,7 +51,7 @@ export const DeviceScreen = observer(({src, device: device}: Props) => {
             src={src}
             sandbox='allow-scripts allow-forms allow-same-origin allow-presentation'
             allow='web-share'
-            className='w-full h-full'
+            className='w-full h-full border border-primary'
             style={{height: device.height}}
           />
         ) : (
