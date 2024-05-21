@@ -1,7 +1,16 @@
-import {makeObservable} from 'mobx'
+'use client'
+
+import {makeAutoObservable} from 'mobx'
 
 export class AppStore {
+  url: string = ''
   constructor() {
-    makeObservable(this)
+    makeAutoObservable(this)
+  }
+
+  setUrl(url: string) {
+    this.url = url
   }
 }
+
+export const appStore = new AppStore()
