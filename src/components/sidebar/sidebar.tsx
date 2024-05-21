@@ -8,7 +8,7 @@ import {SetLinkModal} from '@/components/set-link-modal'
 import {DevicesModal} from '@/components/devices-modal'
 
 export const Sidebar = () => {
-  const [on, toggle] = useToggle(false)
+  const [on, toggle] = useToggle(true)
   const [isLinkModalOpen, toggleLinkModal] = useToggle(false)
   const [isDevicesModalOpen, toggleDevicesModal] = useToggle(false)
 
@@ -18,7 +18,7 @@ export const Sidebar = () => {
         <div
           className={merge([
             'bg-base-100 w-12 rounded-md h-12 border shadow-ms border-base-content',
-            'flex flex-col items-center py-4 overflow-hidden',
+            'flex flex-col items-center py-4',
             'transition-all duration-[700ms] ease-[cubic-bezier(.38,.58,.21,.99)]',
             on && 'h-[calc(100vh-40px)] w-16',
           ])}>
@@ -26,21 +26,27 @@ export const Sidebar = () => {
             className={merge([
               'flex flex-col items-center gap-2 flex-1',
               on &&
-                '[&>button>svg]:animate-fadeUp [&>h1]:animate-fadeUp [&>*:nth-child(1)]:[animation-delay:100ms] [&>*:nth-child(2)>svg]:[animation-delay:200ms] [&>*:nth-child(3)>svg]:[animation-delay:300ms] [&>*:nth-child(4)>svg]:[animation-delay:400ms]',
+                '[&>div>button>svg]:animate-fadeUp [&>h1]:animate-fadeUp [&>*:nth-child(1)]:[animation-delay:100ms] [&>*:nth-child(2)>button>svg]:[animation-delay:200ms] [&>*:nth-child(3)>button>svg]:[animation-delay:300ms] [&>*:nth-child(4)>button>svg]:[animation-delay:400ms]',
             ])}>
             <Logo />
 
-            <SidebarButton onClick={() => toggleLinkModal()}>
-              <Link2 size={20} />
-            </SidebarButton>
+            <div className='tooltip tooltip-right' data-tip='Set site url'>
+              <SidebarButton onClick={() => toggleLinkModal()}>
+                <Link2 size={20} />
+              </SidebarButton>
+            </div>
 
-            <SidebarButton onClick={() => toggleDevicesModal()}>
-              <MonitorSmartphone size={20} />
-            </SidebarButton>
+            <div className='tooltip tooltip-right' data-tip='Add devices'>
+              <SidebarButton onClick={() => toggleDevicesModal()}>
+                <MonitorSmartphone size={20} />
+              </SidebarButton>
+            </div>
 
-            <SidebarButton>
-              <Maximize2 size={20} />
-            </SidebarButton>
+            <div className='tooltip tooltip-right' data-tip='Fit to screen'>
+              <SidebarButton>
+                <Maximize2 size={20} />
+              </SidebarButton>
+            </div>
           </div>
         </div>
 

@@ -8,7 +8,8 @@ type Props = {
 export const ZoomContainer = ({children, zoom}: Props) => {
   return (
     <div
-      id='zoom-screen'
+      id='zoom-container'
+      data-testid='zoom-container'
       style={{
         transform: ` scale(${zoom})`,
         transformStyle: 'preserve-3d',

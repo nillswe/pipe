@@ -3,6 +3,7 @@ import {ViewportContainer, ZoomContainer} from '@/components/containers'
 import {Sidebar} from '@/components/sidebar'
 import {useScreenListeners} from '@/hooks/use-screen-listeners'
 import {appStore} from '@/store/app-store'
+import {Info} from 'lucide-react'
 import {observer} from 'mobx-react-lite'
 import {useEffect} from 'react'
 
@@ -39,22 +40,34 @@ export const MainPage = observer(() => {
 
   return (
     <main
+      id='page-root'
       className='w-screen relative bg-base h-screen flex overflow-hidden'
       onWheel={event => onZoom(event)}>
       <Sidebar />
 
-      <div className='flex min-w-full h-screen overflow-hidden relative '>
-        <ViewportContainer posX={posX} posY={posY}>
-          <ZoomContainer zoom={zoom}>
-            {devices.map(device => (
-              <DeviceScreen
-                key={device.id + appStore.url}
-                src={appStore.url}
-                screen={device}
-              />
-            ))}
-          </ZoomContainer>
-        </ViewportContainer>
+      <div
+        id='content-container'
+        className='flex w-full h-screen overflow-hidden relative items-center justify-center'>
+        {devices.length === 0 && (
+          <div className='alert alert-info w-9/12'>
+            <Info size={22} />
+            <span>Please, add your first device.</span>
+          </div>
+        )}
+
+        {devices.length > 0 && (
+          <ViewportContainer posX={posX} posY={posY}>
+            <ZoomContainer zoom={zoom}>
+              {devices.map(device => (
+                <DeviceScreen
+                  key={device.id + appStore.url}
+                  src={appStore.url}
+                  screen={device}
+                />
+              ))}
+            </ZoomContainer>
+          </ViewportContainer>
+        )}
       </div>
     </main>
   )
