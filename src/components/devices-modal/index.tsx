@@ -23,7 +23,9 @@ export const DevicesModal = ({isOpen, onClose}: Props) => {
           <X size={22} />
         </div>
 
-        <div className='w-full grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5  gap-5'>
+        <div
+          data-testid='modal-content'
+          className='w-full grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5  gap-5'>
           {devices.map(device => {
             return (
               <div
