@@ -14,7 +14,7 @@ export const Sidebar = () => {
 
   return (
     <>
-      <div className='absolute left-5 bottom-5 z-50'>
+      <div className='absolute left-5 bottom-5 z-50' data-testid='sidebar'>
         <div
           className={merge([
             'bg-base-100 w-12 rounded-md h-12 border shadow-ms border-base-content',
