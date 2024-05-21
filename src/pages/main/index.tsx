@@ -47,11 +47,13 @@ export const MainPage = observer(() => {
 
       <div
         id='content-container'
-        className='flex w-full h-screen overflow-hidden relative items-center justify-center'>
+        className='flex w-full h-screen overflow-hidden relative'>
         {devices.length === 0 && (
-          <div className='alert alert-info w-9/12'>
-            <Info size={22} />
-            <span>Please, add your first device.</span>
+          <div className='items-center justify-center flex w-screen h-full'>
+            <div className='alert alert-info w-9/12'>
+              <Info size={22} />
+              <span>Please, add your first device.</span>
+            </div>
           </div>
         )}
 
