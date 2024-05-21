@@ -16,11 +16,11 @@ export const Sidebar = () => {
         <div
           className={merge([
             'bg-base-100 w-12 rounded-md h-12 border shadow-ms border-base-content',
-            'flex flex-col items-center py-4',
+            'flex flex-col items-center py-4 overflow-hidden',
             'transition-all duration-[700ms] ease-[cubic-bezier(.38,.58,.21,.99)]',
             on && 'h-[calc(100vh-40px)] w-16',
           ])}>
-          <div className={merge(['flex flex-col items-center gap-2 h-ful'])}>
+          <div className={merge(['flex flex-col items-center gap-2 flex-1'])}>
             <Logo startAnimation={on} />
 
             <SidebarButton isOpen={on} delay={100}>
