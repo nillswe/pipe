@@ -5,7 +5,7 @@ export const useScreenListeners = () => {
   const [posX, setPosX] = useState(0)
 
   const [zoom, setZoom] = useState(1)
-  const [pageInitialDimensions, setPageInitialDimensions] = useState({
+  const [initialDimensions, setInitialDimensions] = useState({
     width: 0,
     height: 0,
   })
@@ -14,18 +14,14 @@ export const useScreenListeners = () => {
 
   const updateSize = useCallback(() => {
     const curPageDimensions = document.body.getBoundingClientRect()
-    const percentageWidthLeft =
-      curPageDimensions.width / pageInitialDimensions.width
-    const percentageHeightLeft =
-      curPageDimensions.height / pageInitialDimensions.height
+    const percentageWidth = curPageDimensions.width / initialDimensions.width
+    const percentageHeigh = curPageDimensions.height / initialDimensions.height
 
-    setZoom(
-      toFixed(Math.min(Math.min(percentageWidthLeft, percentageHeightLeft), 1)),
-    )
+    setZoom(toFixed(Math.min(Math.min(percentageWidth, percentageHeigh), 1)))
 
     setPosX(0)
     setPosY(0)
-  }, [pageInitialDimensions.height, pageInitialDimensions.width])
+  }, [initialDimensions.height, initialDimensions.width])
 
   const scrollPage = (scroll: WheelEvent) => {
     // @ts-ignore
@@ -51,7 +47,7 @@ export const useScreenListeners = () => {
     })
   }
   const onZoom = (event: ReactWheelEvent<HTMLElement>) => {
-    if (!event.ctrlKey) return event.preventDefault()
+    if (!event.ctrlKey) return
 
     const ZOOM_SENSITIVITY = 200
     const zoomAmount = -(event.deltaY / ZOOM_SENSITIVITY)
@@ -61,7 +57,7 @@ export const useScreenListeners = () => {
   return {
     placeScreens,
     scrollPage,
-    setPageInitialDimensions,
+    setPageInitialDimensions: setInitialDimensions,
     updateSize,
     onZoom,
     posX,
