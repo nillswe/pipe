@@ -1,4 +1,4 @@
-import {fitScreenUIStore} from '@/store/fit-screen-ui-store'
+import {appUiStore} from '@/store/app-ui-store'
 import {useCallback, useState, WheelEvent as ReactWheelEvent} from 'react'
 
 export const useScreenListeners = () => {
@@ -34,26 +34,24 @@ export const useScreenListeners = () => {
   const placeScreens = () => {
     const screens = document.querySelectorAll<HTMLDivElement>('[id^=screen-]')
 
-    console.log('sdasd', fitScreenUIStore.scale)
-
     screens.forEach((screen, index) => {
       if (index === 0) {
-        screen.style.left = '40px'
+        screen.style.left = `${appUiStore.screenPaddingX}px`
       } else {
         const prevScreen = screens[index - 1]
         const newPos =
           prevScreen.offsetLeft +
-          prevScreen.offsetWidth * fitScreenUIStore.scale +
-          80 * fitScreenUIStore.scale
+          prevScreen.offsetWidth * appUiStore.scale +
+          appUiStore.screenPaddingX
+
         screen.style.left = `${newPos}px`
-        console.log({newPos})
       }
     })
   }
   const onZoom = (event: ReactWheelEvent<HTMLElement>) => {
     if (!event.ctrlKey) return
 
-    const ZOOM_SENSITIVITY = 200
+    const ZOOM_SENSITIVITY = 400
     const zoomAmount = -(event.deltaY / ZOOM_SENSITIVITY)
     setZoom(zoom => toFixed(Math.max(Math.min(zoom + zoomAmount, 2), 0.2)))
   }

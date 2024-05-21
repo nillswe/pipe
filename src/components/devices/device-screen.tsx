@@ -3,7 +3,7 @@ import {merge} from '../../utils'
 import {observer} from 'mobx-react-lite'
 import {X} from 'lucide-react'
 import {appStore} from '@/store/app-store'
-import {fitScreenUIStore} from '@/store/fit-screen-ui-store'
+import {appUiStore} from '@/store/app-ui-store'
 
 type Props = {
   src: string
@@ -23,12 +23,13 @@ export const DeviceScreen = observer(({src, device: device}: Props) => {
         width: device.width,
         height: device.height,
         top: '40px',
-        transform: `scale(${fitScreenUIStore.scale})`,
+        transform: `scale(${appUiStore.scale})`,
         transformOrigin: '0px 0px',
       }}>
       <div className='w-full h-10 bg-base-200 absolute -top-12 flex items-center px-2 justify-between'>
         <span className=''>
-          {device.name} - ({device.width}px x {device.height}px)
+          {device.name} | {device.width}px x {device.height}px | scale:{' '}
+          {appUiStore.scale.toFixed(2)}
         </span>
 
         <span></span>

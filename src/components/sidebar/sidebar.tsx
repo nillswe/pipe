@@ -6,7 +6,7 @@ import {merge} from '@/utils'
 import {Logo} from '@/components/brand/logo'
 import {SetLinkModal} from '@/components/set-link-modal'
 import {DevicesModal} from '@/components/devices-modal'
-import {fitScreenUIStore} from '@/store/fit-screen-ui-store'
+import {appUiStore} from '@/store/app-ui-store'
 
 export const Sidebar = () => {
   const [on, toggle] = useToggle(false)
@@ -44,7 +44,7 @@ export const Sidebar = () => {
             </div>
 
             <div className='tooltip tooltip-right' data-tip='Fit to screen'>
-              <SidebarButton onClick={() => fitScreenUIStore.fitToScreen()}>
+              <SidebarButton onClick={() => appUiStore.fitToScreen()}>
                 <Maximize size={20} />
               </SidebarButton>
             </div>

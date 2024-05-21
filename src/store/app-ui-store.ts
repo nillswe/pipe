@@ -1,8 +1,10 @@
 import {makeAutoObservable} from 'mobx'
 
-export class FitScreenUIStore {
+export class AppUIStore {
   scale: number = 0.8
-  spacesY: number = 80
+  screenPaddingY: number = 40
+  screenPaddingX: number = 40
+
   constructor() {
     makeAutoObservable(this)
   }
@@ -12,7 +14,7 @@ export class FitScreenUIStore {
   }
 
   private calcDeviceHeightWithSpaces(device: Element) {
-    return device.clientHeight * this.scale + this.spacesY
+    return device.clientHeight * this.scale + this.screenPaddingY * 2
   }
 
   fitToScreen() {
@@ -39,4 +41,4 @@ export class FitScreenUIStore {
   }
 }
 
-export const fitScreenUIStore = new FitScreenUIStore()
+export const appUiStore = new AppUIStore()
