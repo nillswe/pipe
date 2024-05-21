@@ -7,7 +7,7 @@
     "skipLibCheck": true,
 
     /* types*/
-    "types": ["node"],
+    "types": ["node", "@testing-library/jest-dom/vitest"],
 
     /* Bundler mode */
     "moduleResolution": "bundler",

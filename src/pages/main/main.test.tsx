@@ -12,8 +12,8 @@ describe('MainPage', () => {
   it('should render main page blank', () => {
     makeSUT()
 
-    const container = screen.getByTestId('zoom-container')
+    const container = screen.getByText('Please, add your first device.')
 
-    expect(container.children.length).toBe(0)
+    expect(container).toBeInTheDocument()
   })
 })
