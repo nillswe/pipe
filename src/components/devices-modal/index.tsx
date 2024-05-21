@@ -37,7 +37,7 @@ export const DevicesModal = observer(({isOpen, onClose}: Props) => {
                 key={device.id}
                 onClick={() => onToggleDevice(device)}
                 className={merge([
-                  'flex flex-col w-full text-center items-center bg-base-300 p-2 rounded-md hover:bg-base-content hover:text-base-100 cursor-pointer',
+                  'flex flex-col w-full text-center items-center bg-base-200 p-2 rounded-md hover:bg-base-content hover:text-base-100 cursor-pointer',
                   appStore.devices.find(elem => elem.id === device.id) &&
                     'bg-base-content border text-base-100',
                 ])}>

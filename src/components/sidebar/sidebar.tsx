@@ -17,7 +17,7 @@ export const Sidebar = () => {
       <div className='absolute left-5 bottom-5 z-50' data-testid='sidebar'>
         <div
           className={merge([
-            'bg-base-100 w-12 rounded-md h-12 border shadow-ms border-base-content',
+            'bg-base-200 w-12 rounded-md h-12 border-[0.5px] shadow-ms border-base-content/40',
             'flex flex-col items-center py-4',
             'transition-all duration-[700ms] ease-[cubic-bezier(.38,.58,.21,.99)]',
             on && 'h-[calc(100vh-40px)] w-16',
