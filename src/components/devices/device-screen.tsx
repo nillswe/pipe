@@ -25,7 +25,7 @@ export const DeviceScreen = observer(({src, device: device}: Props) => {
         transform: 'scale(0.8)',
         transformOrigin: '0px 0px',
       }}>
-      <div className='w-full h-10 bg-base-200 absolute -top-14 rounded-md flex items-center px-2 justify-between'>
+      <div className='w-full h-10 bg-base-200 absolute -top-12 flex items-center px-2 justify-between'>
         <span className=''>
           {device.name} - ({device.width}px x {device.height}px)
         </span>
@@ -49,6 +49,7 @@ export const DeviceScreen = observer(({src, device: device}: Props) => {
           <iframe
             src={src}
             sandbox='allow-scripts allow-forms allow-same-origin allow-presentation'
+            allow='web-share'
             className='w-full h-full'
             style={{height: device.height}}
           />

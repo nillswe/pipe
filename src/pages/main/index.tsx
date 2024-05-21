@@ -29,12 +29,12 @@ export const MainPage = observer(() => {
   useEffect(() => {
     placeScreens()
 
-    document.addEventListener('wheel', scrollPage)
+    window.addEventListener('wheel', scrollPage)
     window.addEventListener('resize', updateSize)
 
     return () => {
       window.removeEventListener('resize', updateSize)
-      document.removeEventListener('wheel', scrollPage)
+      window.removeEventListener('wheel', scrollPage)
     }
   }, [placeScreens, scrollPage, updateSize])
 
