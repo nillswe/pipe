@@ -3,13 +3,14 @@ import {appStore} from '@/store/app-store'
 import {Device} from '@/types'
 import {merge} from '@/utils'
 import {LaptopMinimal, Monitor, Smartphone, Tablet, X} from 'lucide-react'
+import {observer} from 'mobx-react-lite'
 
 type Props = {
   isOpen: boolean
   onClose: () => void
 }
 
-export const DevicesModal = ({isOpen, onClose}: Props) => {
+export const DevicesModal = observer(({isOpen, onClose}: Props) => {
   const onToggleDevice = (device: Device) => {
     appStore.addDevice(device)
   }
@@ -31,7 +32,11 @@ export const DevicesModal = ({isOpen, onClose}: Props) => {
               <div
                 key={device.id}
                 onClick={() => onToggleDevice(device)}
-                className='flex flex-col w-full text-center items-center bg-base-300 p-2 rounded-md hover:bg-base-content hover:text-base-100 cursor-pointer'>
+                className={merge([
+                  'flex flex-col w-full text-center items-center bg-base-300 p-2 rounded-md hover:bg-base-content hover:text-base-100 cursor-pointer',
+                  appStore.devices.find(elem => elem.id === device.id) &&
+                    'bg-base-content border text-base-100',
+                ])}>
                 <span>
                   {device.type === 'Smartphone' && <Smartphone size={22} />}
                   {device.type === 'Laptop' && <LaptopMinimal size={22} />}
@@ -52,4 +57,4 @@ export const DevicesModal = ({isOpen, onClose}: Props) => {
       </div>
     </dialog>
   )
-}
+})

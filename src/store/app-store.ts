@@ -6,6 +6,7 @@ import {makeAutoObservable} from 'mobx'
 export class AppStore {
   url: string = ''
   devices: Device[] = []
+
   constructor() {
     makeAutoObservable(this)
   }
