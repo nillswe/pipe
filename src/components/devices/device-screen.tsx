@@ -1,9 +1,9 @@
 import {Device} from '@/types'
-import {merge} from '../../utils'
 import {observer} from 'mobx-react-lite'
 import {X} from 'lucide-react'
 import {appStore} from '@/store/app-store'
 import {appUiStore} from '@/store/app-ui-store'
+import {merge} from '@/utils'
 
 type Props = {
   src: string

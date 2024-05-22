@@ -1,5 +1,4 @@
 const init = () => {
-  alert('hey')
   const children = document.documentElement.children
 
   for (let i = 0; i < children.length; i++) {
@@ -23,7 +22,7 @@ const init = () => {
 
   const appRoot = document.createElement('div')
 
-  appRoot.id = 'RESPONSIVE-VIEWER-ROOT'
+  appRoot.id = 'PIPE-ROOT'
 
   document.body.appendChild(appRoot)
 }
