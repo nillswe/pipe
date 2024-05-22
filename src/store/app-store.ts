@@ -23,9 +23,8 @@ export class AppStore {
     if (isChrome()) {
       const defaultDevices = devices.filter(device => device?.default)
       this.setDevices(defaultDevices)
+      this.setUrl(window.location.href)
     }
-
-    this.setUrl(window.location.href)
   }
 
   addDevice(device: Device) {
