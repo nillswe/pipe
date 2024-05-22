@@ -46,7 +46,9 @@ export class AppUIStore {
   }
 
   private calcDeviceHeightWithSpaces(device: Element) {
-    return device.clientHeight * this.scale + this.screenPaddingY * 2
+    const realDeviceHeight = device.clientHeight * this.scale
+    const verticalPaddings = this.screenPaddingY * 2
+    return realDeviceHeight + verticalPaddings
   }
 
   fitToScreen() {
@@ -57,19 +59,20 @@ export class AppUIStore {
 
     if (!devices) return
 
-    let biggestDeviceInHeight = this.calcDeviceHeightWithSpaces(devices[0])
+    let biggestDeviceHeight = this.calcDeviceHeightWithSpaces(devices[0])
 
     for (const device of devices) {
       const deviceRealHeight = this.calcDeviceHeightWithSpaces(device)
 
-      if (deviceRealHeight > biggestDeviceInHeight) {
-        biggestDeviceInHeight = deviceRealHeight
+      if (deviceRealHeight > biggestDeviceHeight) {
+        biggestDeviceHeight = deviceRealHeight
       }
     }
 
-    const newScale = (screenHeight / biggestDeviceInHeight) * this.scale
+    const newScale = screenHeight / biggestDeviceHeight
 
-    this.setScale(newScale)
+    this.setZoom(Number(newScale.toFixed(2)))
+    this.setViewportPos({x: 0, y: 10})
   }
 
   updateSize() {
@@ -86,8 +89,6 @@ export class AppUIStore {
   }
 
   scrollPage(scroll: WheelEvent) {
-    console.log({scroll})
-
     this.setViewportPos({
       x: this.viewportPos.x + scroll.deltaX * -1,
       y: this.viewportPos.y + scroll.deltaY * -1,
