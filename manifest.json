@@ -4,7 +4,9 @@
   "author": "Null ref",
   "description": "Open multiple devices screens for test or debug a website across devices.",
   "version": "1.0",
-  "action": {},
+  "action": {
+    "default_icon": {"32": "icons/icon32.png"}
+  },
   "background": {
     "service_worker": "src/scripts/background.ts"
   },
