@@ -1,7 +1,7 @@
 import {PLATFORM_OPTIONS} from '@/domain/enums'
 
 export const getPlatform = () => {
-  if (chrome) {
+  if (chrome?.extension) {
     return PLATFORM_OPTIONS.chrome
   }
 
