@@ -13,3 +13,8 @@
     scrollbar-width: none; /* Firefox */
   }
 }
+
+html,
+body {
+  overscroll-behavior-x: none;
+}

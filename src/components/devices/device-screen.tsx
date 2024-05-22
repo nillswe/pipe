@@ -4,6 +4,7 @@ import {X} from 'lucide-react'
 import {appStore} from '@/store/app-store'
 import {appUiStore} from '@/store/app-ui-store'
 import {merge} from '@/utils'
+import {useToggle} from '@uidotdev/usehooks'
 
 type Props = {
   src: string
@@ -11,6 +12,8 @@ type Props = {
 }
 
 export const DeviceScreen = observer(({src, device: device}: Props) => {
+  const [isFrameActive, toggleFrame] = useToggle(false)
+
   const onRemoveDevice = (device: Device) => {
     appStore.removeDevice(device)
   }
@@ -42,7 +45,12 @@ export const DeviceScreen = observer(({src, device: device}: Props) => {
       </div>
 
       <div
-        className='h-full w-full overflow-hidden'
+        onClick={() => toggleFrame(true)}
+        onMouseLeave={() => toggleFrame(false)}
+        className={merge([
+          'h-full w-full overflow-hidden cursor-pointer',
+          isFrameActive && 'cursor-auto',
+        ])}
         style={{
           width: device.width,
           height: device.height,
@@ -52,7 +60,10 @@ export const DeviceScreen = observer(({src, device: device}: Props) => {
             src={src}
             sandbox='allow-scripts allow-forms allow-same-origin allow-presentation'
             allow='web-share'
-            className='w-full h-full border border-primary'
+            className={merge([
+              'w-full h-full border border-primary pointer-events-none',
+              isFrameActive && 'pointer-events-auto',
+            ])}
             style={{height: device.height}}
           />
         ) : (
