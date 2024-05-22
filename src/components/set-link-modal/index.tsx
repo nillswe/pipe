@@ -1,5 +1,3 @@
-'use client'
-
 import {merge} from '@/utils'
 import {appStore} from '@/store/app-store'
 import {useState} from 'react'
