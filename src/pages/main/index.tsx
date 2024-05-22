@@ -1,32 +1,18 @@
 import {DeviceScreen, DevicesModal} from '@/components'
 import {ViewportContainer, ZoomContainer} from '@/components/containers'
 import {Sidebar} from '@/components/sidebar'
+import {useAppListeners} from '@/hooks/use-app-listeners'
 import {appStore} from '@/store/app-store'
 import {appUiStore} from '@/store/app-ui-store'
 import {useToggle} from '@uidotdev/usehooks'
 import {MonitorSmartphone} from 'lucide-react'
 import {observer} from 'mobx-react-lite'
-import {useEffect} from 'react'
 
 export const MainPage = observer(() => {
-  const {devices} = appStore
-  const {scale} = appUiStore
-
   const [isDevicesModalOpen, toggleDevicesModal] = useToggle(false)
+  useAppListeners()
 
-  useEffect(() => {
-    window.addEventListener('wheel', event => appUiStore.scrollPage(event))
-    window.addEventListener('resize', () => appUiStore.updateSize())
-
-    return () => {
-      window.removeEventListener('resize', () => appUiStore.updateSize())
-      window.removeEventListener('wheel', event => appUiStore.scrollPage(event))
-    }
-  }, [])
-
-  useEffect(() => {
-    appUiStore.placeScreens()
-  }, [scale, devices])
+  const {devices} = appStore
 
   return (
     <main
@@ -39,6 +25,7 @@ export const MainPage = observer(() => {
       <div
         id='content-container'
         className='flex w-full h-screen overflow-hidden relative'>
+        {/* No devices found */}
         {devices.length === 0 && (
           <div className='items-center justify-center flex w-screen h-full'>
             <div className='flex flex-col gap-3'>
