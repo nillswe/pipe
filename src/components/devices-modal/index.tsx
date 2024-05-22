@@ -34,7 +34,7 @@ export const DevicesModal = observer(({isOpen, onClose}: Props) => {
           {devices.map(device => {
             return (
               <div
-                key={device.id}
+                key={`device-option-${device.id}`}
                 onClick={() => onToggleDevice(device)}
                 className={merge([
                   'flex flex-col w-full text-center items-center bg-base-200 p-2 rounded-md hover:bg-base-content hover:text-base-100 cursor-pointer',
