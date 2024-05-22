@@ -1,4 +1,4 @@
-import {Device} from '@/types'
+import {Device} from '@/domain/models'
 import {observer} from 'mobx-react-lite'
 import {X} from 'lucide-react'
 import {appStore} from '@/store/app-store'

@@ -12,10 +12,10 @@ type WindowDimensions = {
 }
 
 export class AppUIStore {
-  scale: number = 0.8
+  scale: number = 0.78
   screenPaddingY: number = 40
-  screenPaddingX: number = 40
-  viewportPos: ViewportPosition = {x: 0, y: 0}
+  screenPaddingX: number = 20
+  viewportPos: ViewportPosition = {x: 0, y: 20}
   zoom: number = 1
   windowDimensions: WindowDimensions = {width: 0, height: 0}
   screenDimensions: WindowDimensions = {width: 0, height: 0}
@@ -72,7 +72,7 @@ export class AppUIStore {
     const newScale = screenHeight / biggestDeviceHeight
 
     this.setZoom(Number(newScale.toFixed(2)))
-    this.setViewportPos({x: 0, y: 10})
+    this.setViewportPos({x: 0, y: 20})
   }
 
   updateSize() {
@@ -85,7 +85,7 @@ export class AppUIStore {
 
     this.setZoom(Math.min(Math.min(percentageWidth, percentageHeigh), 1))
 
-    this.setViewportPos({x: 0, y: 10})
+    this.setViewportPos({x: 0, y: 20})
   }
 
   scrollPage(scroll: WheelEvent) {
@@ -119,7 +119,7 @@ export class AppUIStore {
     const ZOOM_SENSITIVITY = 400
     const zoomAmount = -(event.deltaY / ZOOM_SENSITIVITY)
     this.setZoom(Math.max(Math.min(this.zoom + zoomAmount, 2), 0.2))
-    this.setViewportPos({x: 0, y: 10})
+    this.setViewportPos({x: 0, y: 20})
   }
 }
 

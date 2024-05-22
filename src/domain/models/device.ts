@@ -7,4 +7,5 @@ export type Device = {
   height: number
   type: DeviceType
   userAgent: string
+  default?: boolean
 }

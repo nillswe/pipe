@@ -1,4 +1,4 @@
-import {Device} from '@/types'
+import {Device} from '@/domain/models'
 
 export const devices: Device[] = [
   {
@@ -8,6 +8,7 @@ export const devices: Device[] = [
     height: 896,
     type: 'Smartphone',
     userAgent: 'iPhone',
+    default: true,
   },
   {
     id: '89ff6995-f859-4c2a-ae90-7b47cd5e6da5',
@@ -92,6 +93,7 @@ export const devices: Device[] = [
     height: 900,
     type: 'Laptop',
     userAgent: 'Google Chrome',
+    default: true,
   },
   {
     id: '63d16243-4f7f-49dd-93bc-20755a0b75bf',

@@ -1,6 +1,6 @@
-'use client'
-
-import {Device} from '@/types'
+import {devices} from '@/constants/devices'
+import {Device} from '@/domain/models'
+import {isChrome} from '@/platforms'
 import {makeAutoObservable} from 'mobx'
 
 export class AppStore {
@@ -13,6 +13,17 @@ export class AppStore {
 
   setUrl(url: string) {
     this.url = url
+  }
+
+  private setDevices(devices: Device[]) {
+    this.devices = devices
+  }
+
+  initialize() {
+    if (isChrome()) {
+      const defaultDevices = devices.filter(device => device?.default)
+      this.setDevices(defaultDevices)
+    }
   }
 
   addDevice(device: Device) {

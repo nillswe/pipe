@@ -1,6 +1,6 @@
 import {devices} from '@/constants/devices'
 import {appStore} from '@/store/app-store'
-import {Device} from '@/types'
+import {Device} from '@/domain/models'
 import {merge} from '@/utils'
 import {LaptopMinimal, Monitor, Smartphone, Tablet, X} from 'lucide-react'
 import {observer} from 'mobx-react-lite'
