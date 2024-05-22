@@ -24,6 +24,8 @@ export class AppStore {
       const defaultDevices = devices.filter(device => device?.default)
       this.setDevices(defaultDevices)
     }
+
+    this.setUrl(window.location.href)
   }
 
   addDevice(device: Device) {
