@@ -60,7 +60,7 @@ export const MainPage = observer(() => {
             <ZoomContainer zoom={appUiStore.zoom}>
               {devices.map(device => (
                 <DeviceScreen
-                  key={device.id + appStore.url}
+                  key={device.id}
                   src={appStore.url}
                   device={device}
                 />

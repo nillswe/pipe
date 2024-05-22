@@ -35,6 +35,7 @@ export const SetLinkModal = observer(({isOpen, onClose}: Props) => {
             placeholder='Type an url'
           />
           <button
+            type='button'
             className='btn btn-primary w-28 rounded-l-none'
             onClick={onSubmit}>
             Save
