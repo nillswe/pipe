@@ -10,6 +10,12 @@
   "background": {
     "service_worker": "src/scripts/background.ts"
   },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["src/scripts/content-script.ts"]
+    }
+  ],
   "permissions": [
     "tabs",
     "activeTab",

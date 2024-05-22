@@ -5,6 +5,15 @@ const removeAttributes = (element: HTMLElement) => {
 }
 
 const clearPageContent = () => {
+  const children = document.documentElement.children
+
+  for (let i = 0; i < children.length; i++) {
+    const element = children[i]
+    if (['head', 'body'].includes(element.tagName) && element.parentNode) {
+      element.parentNode.removeChild(element)
+    }
+  }
+
   document.head.innerHTML = ''
   document.body.innerHTML = ''
 
