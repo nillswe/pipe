@@ -85,7 +85,7 @@ export class AppUIStore {
 
     this.setZoom(Math.min(Math.min(percentageWidth, percentageHeigh), 1))
 
-    this.setViewportPos({x: 0, y: 0})
+    this.setViewportPos({x: 0, y: 10})
   }
 
   scrollPage(scroll: WheelEvent) {
@@ -119,6 +119,7 @@ export class AppUIStore {
     const ZOOM_SENSITIVITY = 400
     const zoomAmount = -(event.deltaY / ZOOM_SENSITIVITY)
     this.setZoom(Math.max(Math.min(this.zoom + zoomAmount, 2), 0.2))
+    this.setViewportPos({x: 0, y: 10})
   }
 }
 
