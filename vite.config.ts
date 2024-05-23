@@ -1,8 +1,5 @@
 import {defineConfig} from 'vitest/config'
-// import react from '@vitejs/plugin-react-swc'
 import react from '@vitejs/plugin-react'
-import {crx} from '@crxjs/vite-plugin'
-import manifest from './manifest.json'
 // @ts-ignore
 import eslint from 'vite-plugin-eslint'
 
@@ -10,7 +7,29 @@ import path from 'path'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [eslint(), react(), crx({manifest})],
+  plugins: [eslint(), react()],
+  build: {
+    outDir: 'dist',
+    assetsDir: '.',
+    rollupOptions: {
+      input: {
+        // popup page
+        index: './index.html',
+
+        // service worker
+        background: './src/scripts/background.ts',
+        clearPageContent: './src/scripts/clear-page-content.ts',
+        reactMain: './src/main.tsx',
+
+        // content scripts
+        content: './src/scripts/content.ts',
+      },
+      output: {
+        entryFileNames: `[name].js`,
+      },
+    },
+  },
+
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),

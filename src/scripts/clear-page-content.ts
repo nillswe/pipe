@@ -14,7 +14,13 @@ const clearPageContent = () => {
     }
   }
 
+  const style = document.createElement('link')
+  style.rel = 'stylesheet'
+  style.type = 'text/css'
+  style.href = chrome.runtime.getURL('reactMain-D7lzuqIG.css')
+
   document.head.innerHTML = ''
+  document.head.appendChild(style)
   document.body.innerHTML = ''
 
   removeAttributes(document.body)
@@ -26,5 +32,4 @@ const clearPageContent = () => {
 
   document.body.appendChild(appRoot)
 }
-
 clearPageContent()
