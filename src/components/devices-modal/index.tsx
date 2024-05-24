@@ -15,7 +15,6 @@ export const DevicesModal = observer(({isOpen, onClose}: Props) => {
     const hasDevice = appStore.devices.find(elem => elem.id === device.id)
 
     if (hasDevice) return appStore.removeDevice(device)
-
     appStore.addDevice(device)
   }
 
