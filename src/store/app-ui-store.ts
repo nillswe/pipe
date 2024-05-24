@@ -119,7 +119,6 @@ export class AppUIStore {
     const ZOOM_SENSITIVITY = 400
     const zoomAmount = -(event.deltaY / ZOOM_SENSITIVITY)
     this.setZoom(Math.max(Math.min(this.zoom + zoomAmount, 2), 0.2))
-    this.setViewportPos({x: 0, y: 20})
   }
 }
 

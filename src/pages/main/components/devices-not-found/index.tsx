@@ -8,13 +8,16 @@ export const DevicesNotFound = observer(() => {
 
   return (
     <>
-      <DevicesModal isOpen={isDevicesModalOpen} onClose={toggleDevicesModal} />
+      <DevicesModal
+        isOpen={isDevicesModalOpen}
+        onClose={() => toggleDevicesModal(false)}
+      />
       <div className='items-center justify-center flex w-screen h-full'>
         <div className='flex flex-col gap-3'>
           <span className='text-1xl'>Please, add your first device.</span>
           <button
             className='btn btn-primary'
-            onClick={() => toggleDevicesModal()}>
+            onClick={() => toggleDevicesModal(true)}>
             <MonitorSmartphone size={22} />
             Add device
           </button>
