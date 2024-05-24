@@ -89,6 +89,15 @@ export class AppUIStore {
   }
 
   scrollPage(scroll: WheelEvent) {
+    //horizontal scroll for mouse users
+    if (scroll.shiftKey) {
+      this.setViewportPos({
+        x: this.viewportPos.x + scroll.deltaY * -1,
+        y: this.viewportPos.y,
+      })
+      return
+    }
+
     this.setViewportPos({
       x: this.viewportPos.x + scroll.deltaX * -1,
       y: this.viewportPos.y + scroll.deltaY * -1,
