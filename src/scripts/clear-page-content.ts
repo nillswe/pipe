@@ -17,7 +17,7 @@ const clearPageContent = () => {
   const style = document.createElement('link')
   style.rel = 'stylesheet'
   style.type = 'text/css'
-  style.href = chrome.runtime.getURL('reactMain-D7lzuqIG.css')
+  style.href = chrome.runtime.getURL('reactMain.css')
 
   document.head.innerHTML = ''
   document.head.appendChild(style)
