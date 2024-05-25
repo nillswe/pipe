@@ -1,5 +1,5 @@
 import {autorun, makeAutoObservable} from 'mobx'
-import {WheelEvent as ReactWheelEvent} from 'react'
+import {WheelEvent as ReactWheelEvent, RefObject} from 'react'
 
 type ViewportPosition = {
   x: number
@@ -19,6 +19,7 @@ export class AppUIStore {
   zoom: number = 1
   windowDimensions: WindowDimensions = {width: 0, height: 0}
   screenDimensions: WindowDimensions = {width: 0, height: 0}
+  screensContainerRef: RefObject<HTMLDivElement> | null = null
 
   constructor() {
     makeAutoObservable(this)
@@ -27,6 +28,10 @@ export class AppUIStore {
       const {availWidth, availHeight} = window.screen
       this.setScreenDimensions({width: availWidth, height: availHeight})
     })
+  }
+
+  initialize(screensContainerRef: RefObject<HTMLDivElement>) {
+    this.screensContainerRef = screensContainerRef
   }
 
   setScale(scale: number) {
@@ -107,6 +112,8 @@ export class AppUIStore {
   placeScreens() {
     const screens = document.querySelectorAll<HTMLDivElement>('[id^=screen-]')
 
+    console.log('debug:', this.screensContainerRef?.current)
+
     screens.forEach((screen, index) => {
       if (index === 0) {
         screen.style.left = `${this.screenPaddingX}px`
@@ -131,4 +138,4 @@ export class AppUIStore {
   }
 }
 
-export const appUiStore = new AppUIStore()
+export const appUIStore = new AppUIStore()

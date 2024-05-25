@@ -20,11 +20,16 @@ export class AppStore {
   }
 
   initialize() {
-    if (isChrome()) {
-      const defaultDevices = devices.filter(device => device?.default)
-      this.setDevices(defaultDevices)
-      this.setUrl(window.location.href)
-    }
+    return new Promise(resolve => {
+      if (isChrome()) {
+        const defaultDevices = devices.filter(device => device?.default)
+        this.setDevices(defaultDevices)
+        this.setUrl(window.location.href)
+        return resolve(true)
+      }
+
+      return resolve(true)
+    })
   }
 
   addDevice(device: Device) {
