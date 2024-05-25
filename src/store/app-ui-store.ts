@@ -12,9 +12,10 @@ type WindowDimensions = {
 }
 
 export class AppUIStore {
-  scale: number = 0.78
+  scale: number = 0.9
   screenPaddingY: number = 40
   screenPaddingX: number = 20
+  screenPaddingSidebar: number = 90
   viewportPos: ViewportPosition = {x: 0, y: 20}
   zoom: number = 1
   windowDimensions: WindowDimensions = {width: 0, height: 0}
@@ -64,17 +65,16 @@ export class AppUIStore {
 
     if (!devices) return
 
-    let biggestDeviceHeight = this.calcDeviceHeightWithSpaces(devices[0])
+    // init variable with the first device
+    let highestDevice = this.calcDeviceHeightWithSpaces(devices[0])
 
+    // find the highest device
     for (const device of devices) {
       const deviceRealHeight = this.calcDeviceHeightWithSpaces(device)
-
-      if (deviceRealHeight > biggestDeviceHeight) {
-        biggestDeviceHeight = deviceRealHeight
-      }
+      if (deviceRealHeight > highestDevice) highestDevice = deviceRealHeight
     }
 
-    const newScale = screenHeight / biggestDeviceHeight
+    const newScale = screenHeight / highestDevice
 
     this.setZoom(Number(newScale.toFixed(2)))
     this.setViewportPos({x: 0, y: 20})
@@ -116,7 +116,7 @@ export class AppUIStore {
 
     screens.forEach((screen, index) => {
       if (index === 0) {
-        screen.style.left = `${this.screenPaddingX}px`
+        screen.style.left = `${this.screenPaddingSidebar}px`
       } else {
         const prevScreen = screens[index - 1]
         const newPos =

@@ -9,13 +9,13 @@ import {DevicesModal} from '@/components/devices-modal'
 import {appUIStore} from '@/store/app-ui-store'
 
 export const Sidebar = () => {
-  const [isSidebarOpen, toggleSidebar] = useToggle(false)
+  const [isSidebarOpen, toggleSidebar] = useToggle(true)
   const [isLinkModalOpen, toggleLinkModal] = useToggle(false)
   const [isDevicesModalOpen, toggleDevicesModal] = useToggle(false)
 
   return (
     <>
-      <div className='absolute left-5 bottom-5 z-50' data-testid='sidebar'>
+      <div className='absolute left-3 bottom-5 z-50' data-testid='sidebar'>
         <div
           className={merge([
             'bg-base-200 w-12 rounded-md h-12 border-[0.5px] shadow-ms border-base-content/40',
