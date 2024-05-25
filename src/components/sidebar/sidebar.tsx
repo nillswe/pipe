@@ -1,5 +1,11 @@
 import {useToggle} from '@uidotdev/usehooks'
-import {Link2, Maximize, MonitorSmartphone} from 'lucide-react'
+import {
+  Link2,
+  Maximize,
+  MonitorSmartphone,
+  Mouse,
+  MousePointerClick,
+} from 'lucide-react'
 import {SidebarButton} from '@/components/sidebar/sidebar-button'
 import {SidebarToggle} from '@/components/sidebar/sidebar-toggle'
 import {merge} from '@/utils'
@@ -27,7 +33,7 @@ export const Sidebar = () => {
             className={merge([
               'flex flex-col items-center gap-2 flex-1',
               isSidebarOpen &&
-                '[&>div>button>svg]:animate-fadeUp [&>h1]:animate-fadeUp [&>*:nth-child(1)]:[animation-delay:100ms] [&>*:nth-child(2)>button>svg]:[animation-delay:200ms] [&>*:nth-child(3)>button>svg]:[animation-delay:300ms] [&>*:nth-child(4)>button>svg]:[animation-delay:400ms]',
+                '[&>div>button>svg]:animate-fadeUp [&>h1]:animate-fadeUp [&>*:nth-child(1)]:[animation-delay:100ms] [&>*:nth-child(2)>button>svg]:[animation-delay:150ms] [&>*:nth-child(3)>button>svg]:[animation-delay:200ms] [&>*:nth-child(4)>button>svg]:[animation-delay:250ms] [&>*:nth-child(5)>button>svg]:[animation-delay:300ms]',
             ])}>
             <Logo />
 
@@ -46,6 +52,18 @@ export const Sidebar = () => {
             <div className='tooltip tooltip-right' data-tip='Fit to screen'>
               <SidebarButton onClick={() => appUIStore.fitToScreen()}>
                 <Maximize size={20} />
+              </SidebarButton>
+            </div>
+
+            <div className='tooltip tooltip-right' data-tip='Sync scroll'>
+              <SidebarButton onClick={() => appUIStore.fitToScreen()}>
+                <Mouse size={20} />
+              </SidebarButton>
+            </div>
+
+            <div className='tooltip tooltip-right' data-tip='Sync click'>
+              <SidebarButton onClick={() => appUIStore.fitToScreen()}>
+                <MousePointerClick size={20} />
               </SidebarButton>
             </div>
           </div>

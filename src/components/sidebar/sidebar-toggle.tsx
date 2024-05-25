@@ -17,10 +17,7 @@ export const SidebarToggle = ({isOpen, toggle}: Props) => {
       ])}
       onClick={() => toggle()}>
       {isOpen ? (
-        <X
-          size={22}
-          className={merge(['text-neutral', isOpen && 'animate-fadeUp'])}
-        />
+        <X size={22} className={merge([isOpen && 'animate-fadeUp'])} />
       ) : (
         <Menu
           size={22}
