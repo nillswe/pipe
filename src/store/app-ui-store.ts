@@ -125,6 +125,8 @@ export class AppUIStore {
   onZoom = (event: ReactWheelEvent<HTMLElement>) => {
     if (!event.ctrlKey) return
 
+    console.log({event})
+
     const ZOOM_SENSITIVITY = 400
     const zoomAmount = -(event.deltaY / ZOOM_SENSITIVITY)
     this.setZoom(Math.max(Math.min(this.zoom + zoomAmount, 2), 0.2))
