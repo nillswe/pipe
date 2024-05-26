@@ -13,18 +13,12 @@ export class SyncLocationStore {
     iframe: HTMLIFrameElement,
     callback: (url: string) => void,
   ) {
-    console.log('iframeObserver')
-
     this.oldHref = getIframeHref(iframe)
     const body = getIframeBody(iframe)
     if (!body) return
 
-    console.log('body', body)
-
     const observer = new MutationObserver(() => {
       const newHref = getIframeHref(iframe)
-
-      console.log({oldHref: this.oldHref, newHref})
 
       if (this.oldHref !== newHref) {
         this.oldHref = newHref
@@ -32,15 +26,13 @@ export class SyncLocationStore {
       }
     })
 
-    observer.observe(body, {childList: true, subtree: true})
+    observer.observe(body, {childList: true, subtree: true, attributes: true})
   }
 
   private iframeListenUrlChange(
     iframe: HTMLIFrameElement,
     callback: (url: string) => void,
   ) {
-    console.log('iframeListenUrlChange called')
-
     iframe.contentWindow?.removeEventListener('load', () =>
       this.iframeObserver(iframe, callback),
     )
@@ -52,15 +44,15 @@ export class SyncLocationStore {
   initialize(devices: Device[]) {
     devices.forEach(device => {
       const iframe = getIframeElem(device.id)
-      if (!iframe) return
 
-      console.log({iframe})
+      if (!iframe) return
 
       this.iframeListenUrlChange(iframe, url => {
         devices.forEach(dev => {
           if (dev.id !== device.id) {
             getIframeElem(dev.id)?.contentWindow?.location.assign(url)
-            this.initialize(devices)
+            // it doesn't work without the timeout.
+            setTimeout(() => this.initialize(devices), 100)
           }
         })
       })
