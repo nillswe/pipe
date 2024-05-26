@@ -14,7 +14,9 @@ export const useAppListeners = () => {
   }, [])
 
   useEffect(() => {
-    appStore.initialize()
+    appStore.initialize().then(() => {
+      appUIStore.syncLocation()
+    })
   }, [])
 
   return {}

@@ -4,6 +4,7 @@ import {X} from 'lucide-react'
 import {appStore} from '@/store/app-store'
 import {merge} from '@/utils'
 import {useToggle} from '@uidotdev/usehooks'
+import {useRef} from 'react'
 
 type Props = {
   src: string
@@ -12,6 +13,7 @@ type Props = {
 
 export const DeviceScreen = observer(({src, device: device}: Props) => {
   const [isFrameActive, toggleFrame] = useToggle(false)
+  const iframeRef = useRef<HTMLIFrameElement>(null)
 
   const onRemoveDevice = (device: Device) => {
     appStore.removeDevice(device)
@@ -52,8 +54,9 @@ export const DeviceScreen = observer(({src, device: device}: Props) => {
         }}>
         {src ? (
           <iframe
+            ref={iframeRef}
             src={src}
-            sandbox='allow-scripts allow-forms allow-same-origin allow-presentation'
+            sandbox={`allow-scripts allow-forms allow-same-origin allow-presentation allow-orientation-lock allow-modals allow-popups allow-popups-to-escape-sandbox allow-pointer-lock`}
             allow='web-share'
             className={merge([
               'w-full h-full border-2 border-base-300 pointer-events-none',

@@ -13,11 +13,8 @@ type WindowDimensions = {
 
 export class AppUIStore {
   screenPaddingY: number = 40
-  screenPaddingX: number = 20
-  screenPaddingSidebar: number = 90
   viewportPos: ViewportPosition = {x: 0, y: 0}
   zoom: number = 0.9
-  windowDimensions: WindowDimensions = {width: 0, height: 0}
   screenDimensions: WindowDimensions = {width: 0, height: 0}
   screensContainerRef: RefObject<HTMLDivElement> | null = null
 
@@ -110,6 +107,17 @@ export class AppUIStore {
     const ZOOM_SENSITIVITY = 400
     const zoomAmount = -(event.deltaY / ZOOM_SENSITIVITY)
     this.setZoom(Math.max(Math.min(this.zoom + zoomAmount, 2), 0.2))
+  }
+
+  syncLocation() {
+    const id = '#screen-23da0cd9-3051-45ec-a54d-360bbc01b749 iframe'
+    const iframe = document.querySelector<HTMLIFrameElement>(id)
+
+    iframe?.contentWindow?.addEventListener('load', () => {
+      console.log(iframe?.contentWindow?.location.href)
+    })
+
+    if (!iframe) return
   }
 }
 
