@@ -1,12 +1,21 @@
 import {Device} from '@/domain/models'
+import {isWebApp} from '@/platforms'
 import {getIframeBody, getIframeElem, getIframeHref} from '@/utils'
 import {makeAutoObservable} from 'mobx'
 
 export class SyncLocationStore {
   oldHref: string = ''
+  isSynLocationOn: boolean = true
 
   constructor() {
     makeAutoObservable(this)
+    if (isWebApp()) {
+      this.isSynLocationOn = false
+    }
+  }
+
+  toggleSyncLocation() {
+    this.isSynLocationOn = !this.isSynLocationOn
   }
 
   private iframeObserver(
