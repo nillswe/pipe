@@ -10,10 +10,10 @@ type Props = {
 }
 
 export const SetLinkModal = observer(({isOpen, onClose}: Props) => {
-  const [url, setUrl] = useState(appStore.url)
+  const [url, setUrl] = useState('')
 
   const onSubmit = () => {
-    appStore.setUrl(url)
+    appStore.initAllUrl(url)
     onClose()
   }
 

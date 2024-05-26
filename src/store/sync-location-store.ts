@@ -1,9 +1,10 @@
 import {Device} from '@/domain/models'
+import {appStore} from '@/store/app-store'
 import {getIframeBody, getIframeHref, getIframeId} from '@/utils'
 import {makeAutoObservable} from 'mobx'
 
 export class SyncLocationStore {
-  lastDispatched: string = ''
+  oldHref: string = ''
 
   constructor() {
     makeAutoObservable(this)
@@ -14,14 +15,16 @@ export class SyncLocationStore {
     callback: (url: string) => void,
   ) {
     iframe.contentWindow?.addEventListener('load', () => {
-      let oldHref = getIframeHref(iframe)
+      this.oldHref = getIframeHref(iframe)
       const body = getIframeBody(iframe)
 
       const observer = new MutationObserver(() => {
         const newHref = getIframeHref(iframe)
 
-        if (oldHref !== newHref) {
-          oldHref = newHref
+        console.log({oldHref: this.oldHref, newHref})
+
+        if (this.oldHref !== newHref) {
+          this.oldHref = newHref
           callback(newHref)
         }
       })
@@ -38,7 +41,14 @@ export class SyncLocationStore {
 
       if (!iframe) return
 
-      this.iframeListenUrlChange(iframe, url => console.log(url))
+      this.iframeListenUrlChange(iframe, url => {
+        console.log('changed', url)
+        devices.forEach(({id}) => {
+          if (id !== device.id) {
+            appStore.setUrl(url, id)
+          }
+        })
+      })
     })
   }
 }

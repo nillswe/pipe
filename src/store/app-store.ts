@@ -4,7 +4,7 @@ import {isChrome} from '@/platforms'
 import {makeAutoObservable} from 'mobx'
 
 export class AppStore {
-  url: string = ''
+  url: Record<string, string> = {}
   devices: Device[] = []
 
   isSynLocationOn: boolean = true
@@ -13,8 +13,14 @@ export class AppStore {
     makeAutoObservable(this)
   }
 
-  setUrl(url: string) {
-    this.url = url
+  initAllUrl(url: string) {
+    this.devices.forEach(device => {
+      this.setUrl(url, device.id)
+    })
+  }
+
+  setUrl(url: string, id: string) {
+    this.url = {...this.url, [id]: url}
   }
 
   private setDevices(devices: Device[]) {
@@ -23,13 +29,12 @@ export class AppStore {
 
   initialize() {
     return new Promise(resolve => {
-      if (isChrome()) {
-        this.setUrl(window.location.href)
-      }
-
       const defaultDevices = devices.filter(device => device?.default)
       this.setDevices(defaultDevices)
 
+      if (isChrome()) {
+        this.initAllUrl(window.location.href)
+      }
       return resolve(true)
     })
   }
@@ -43,7 +48,7 @@ export class AppStore {
   }
 
   reset() {
-    this.setUrl('')
+    this.initAllUrl('')
     this.devices = []
   }
 }

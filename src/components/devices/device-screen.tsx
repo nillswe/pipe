@@ -6,7 +6,7 @@ import {getIframeId, merge} from '@/utils'
 import {useToggle} from '@uidotdev/usehooks'
 
 type Props = {
-  src: string
+  src: Record<string, string>
   device: Device
 }
 
@@ -53,8 +53,8 @@ export const DeviceScreen = observer(({src, device: device}: Props) => {
         {src ? (
           <iframe
             id={getIframeId(device.id)}
-            src={src}
-            sandbox={`allow-scripts allow-forms allow-same-origin allow-presentation allow-orientation-lock allow-modals allow-popups allow-popups-to-escape-sandbox allow-pointer-lock`}
+            src={src[device.id]}
+            sandbox={`allow-scripts allow-forms allow-same-origin allow-presentation allow-orientation-lock allow-modals allow-popups allow-popups-to-escape-sandbox allow-pointer-lock allow-top-navigation`}
             allow='web-share'
             className={merge([
               'w-full h-full border-2 border-base-300 pointer-events-none',
