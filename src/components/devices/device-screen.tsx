@@ -56,8 +56,8 @@ export const DeviceScreen = observer(({src, device: device}: Props) => {
             sandbox='allow-scripts allow-forms allow-same-origin allow-presentation'
             allow='web-share'
             className={merge([
-              'w-full h-full border border-primary pointer-events-none',
-              isFrameActive && 'pointer-events-auto',
+              'w-full h-full border-2 border-base-300 pointer-events-none',
+              isFrameActive && 'pointer-events-auto border-primary border-2',
             ])}
             style={{height: device.height}}
           />
