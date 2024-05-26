@@ -1,5 +1,6 @@
 import {appStore} from '@/store/app-store'
 import {appUIStore} from '@/store/app-ui-store'
+import {syncLocationStore} from '@/store/sync-location-store'
 import {useEffect} from 'react'
 
 export const useAppListeners = () => {
@@ -20,7 +21,7 @@ export const useAppListeners = () => {
   }, [])
 
   useEffect(() => {
-    appUIStore.syncLocation(devices)
+    syncLocationStore.initialize(appStore.devices)
   }, [devices])
 
   return {}

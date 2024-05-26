@@ -1,5 +1,3 @@
-import {Device} from '@/domain/models'
-import {appStore} from '@/store/app-store'
 import {autorun, makeAutoObservable} from 'mobx'
 import {WheelEvent as ReactWheelEvent, RefObject} from 'react'
 
@@ -109,49 +107,6 @@ export class AppUIStore {
     const ZOOM_SENSITIVITY = 400
     const zoomAmount = -(event.deltaY / ZOOM_SENSITIVITY)
     this.setZoom(Math.max(Math.min(this.zoom + zoomAmount, 2), 0.2))
-  }
-
-  private iframeListenUrlChange(
-    iframe: HTMLIFrameElement,
-    callback: (url: string) => void,
-  ) {
-    let lastDispatched: string
-    let isFirstLoad: boolean = true
-
-    const getUrl = () => iframe?.contentWindow?.location.href ?? ''
-
-    const getUrlHandler = () => {
-      const href = getUrl()
-
-      if (lastDispatched !== href && !isFirstLoad) {
-        console.log('dispatch')
-        callback(href)
-        lastDispatched = href
-      } else {
-        // prevent to dispatch when it's still the initial page
-        isFirstLoad = false
-        lastDispatched = href
-      }
-    }
-
-    let intervalId: NodeJS.Timeout
-
-    iframe.contentWindow?.addEventListener('load', () => {
-      // clear interval if there's some
-      if (intervalId) clearInterval(intervalId)
-      intervalId = setInterval(getUrlHandler, 100)
-    })
-  }
-
-  syncLocation(devices: Device[]) {
-    devices.forEach(device => {
-      const selector = `#screen-${device.id} iframe`
-      const iframe = document.querySelector<HTMLIFrameElement>(selector)
-
-      if (!iframe) return
-
-      this.iframeListenUrlChange(iframe, url => appStore.setUrl(url))
-    })
   }
 }
 

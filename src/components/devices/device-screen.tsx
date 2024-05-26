@@ -2,7 +2,7 @@ import {Device} from '@/domain/models'
 import {observer} from 'mobx-react-lite'
 import {X} from 'lucide-react'
 import {appStore} from '@/store/app-store'
-import {merge} from '@/utils'
+import {getIframeId, merge} from '@/utils'
 import {useToggle} from '@uidotdev/usehooks'
 
 type Props = {
@@ -52,6 +52,7 @@ export const DeviceScreen = observer(({src, device: device}: Props) => {
         }}>
         {src ? (
           <iframe
+            id={getIframeId(device.id)}
             src={src}
             sandbox={`allow-scripts allow-forms allow-same-origin allow-presentation allow-orientation-lock allow-modals allow-popups allow-popups-to-escape-sandbox allow-pointer-lock`}
             allow='web-share'
