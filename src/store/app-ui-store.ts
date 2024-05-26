@@ -1,3 +1,4 @@
+import {appStore} from '@/store/app-store'
 import {autorun, makeAutoObservable} from 'mobx'
 import {WheelEvent as ReactWheelEvent, RefObject} from 'react'
 
@@ -101,7 +102,7 @@ export class AppUIStore {
     })
   }
 
-  onZoom = (event: ReactWheelEvent<HTMLElement>) => {
+  onZoom(event: ReactWheelEvent<HTMLElement>) {
     if (!event.ctrlKey) return
 
     const ZOOM_SENSITIVITY = 400
@@ -109,15 +110,47 @@ export class AppUIStore {
     this.setZoom(Math.max(Math.min(this.zoom + zoomAmount, 2), 0.2))
   }
 
+  private iframeListenUrlChange(
+    iframe: HTMLIFrameElement,
+    callback: (url: string) => void,
+  ) {
+    let lastDispatched: string
+    let isFirstLoad: boolean = true
+
+    const getUrl = () => iframe?.contentWindow?.location.href ?? ''
+
+    const getUrlHandler = () => {
+      const href = getUrl()
+
+      if (lastDispatched !== href && !isFirstLoad) {
+        callback(href)
+        lastDispatched = href
+      } else {
+        // prevent to dispatch when it's still the initial page
+        isFirstLoad = false
+        lastDispatched = href
+      }
+    }
+
+    let intervalId: NodeJS.Timeout
+
+    iframe.contentWindow?.addEventListener('load', () => {
+      // clear interval if there's some
+      if (intervalId) clearInterval(intervalId)
+      intervalId = setInterval(getUrlHandler, 100)
+    })
+  }
+
   syncLocation() {
     const id = '#screen-23da0cd9-3051-45ec-a54d-360bbc01b749 iframe'
     const iframe = document.querySelector<HTMLIFrameElement>(id)
 
-    iframe?.contentWindow?.addEventListener('load', () => {
-      console.log(iframe?.contentWindow?.location.href)
-    })
-
     if (!iframe) return
+
+    this.iframeListenUrlChange(iframe, url => {
+      console.log('load', url)
+      appStore.setUrl(url)
+    })
   }
 }
 
