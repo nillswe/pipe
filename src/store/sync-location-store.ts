@@ -39,8 +39,9 @@ export class SyncLocationStore {
   }
 
   initialize(device: Device) {
-    const iframe = getIframeElem(device.id)!
+    if (!this.isSynLocationOn) return
 
+    const iframe = getIframeElem(device.id)!
     let gotRedirected: boolean = false
 
     window?.addEventListener('message', event => {
