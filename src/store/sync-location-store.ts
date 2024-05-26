@@ -29,33 +29,31 @@ export class SyncLocationStore {
     observer.observe(body, {childList: true, subtree: true, attributes: true})
   }
 
-  private iframeListenUrlChange(
-    iframe: HTMLIFrameElement,
-    callback: (url: string) => void,
-  ) {
-    iframe.contentWindow?.removeEventListener('load', () =>
-      this.iframeObserver(iframe, callback),
-    )
-    iframe.contentWindow?.addEventListener('load', () =>
-      this.iframeObserver(iframe, callback),
-    )
-  }
+  initialize(device: Device) {
+    const iframe = getIframeElem(device.id)!
 
-  initialize(devices: Device[]) {
-    devices.forEach(device => {
-      const iframe = getIframeElem(device.id)
+    let gotRedirected: boolean = false
 
-      if (!iframe) return
+    window?.addEventListener('message', event => {
+      if (event.data?.message === 'URL_CHANGED') {
+        if (event.data.deviceIdOrigin !== device.id) {
+          gotRedirected = true
+          iframe.contentWindow?.location.assign(event.data.data)
+          return
+        }
+        gotRedirected = false
+      }
+    })
 
-      this.iframeListenUrlChange(iframe, url => {
-        devices.forEach(dev => {
-          if (dev.id !== device.id) {
-            getIframeElem(dev.id)?.contentWindow?.location.assign(url)
-            // it doesn't work without the timeout.
-            setTimeout(() => this.initialize(devices), 100)
-          }
+    this.iframeObserver(iframe, url => {
+      // prevent dispatch message after be redirected from another device
+      if (!gotRedirected) {
+        window.postMessage({
+          message: 'URL_CHANGED',
+          deviceIdOrigin: device.id,
+          data: url,
         })
-      })
+      }
     })
   }
 }
