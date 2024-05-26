@@ -13,7 +13,7 @@ export const SetLinkModal = observer(({isOpen, onClose}: Props) => {
   const [url, setUrl] = useState('')
 
   const onSubmit = () => {
-    appStore.initAllUrl(url)
+    appStore.setUrl(url)
     onClose()
   }
 

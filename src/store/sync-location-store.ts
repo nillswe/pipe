@@ -21,8 +21,6 @@ export class SyncLocationStore {
       const observer = new MutationObserver(() => {
         const newHref = getIframeHref(iframe)
 
-        console.log({oldHref: this.oldHref, newHref})
-
         if (this.oldHref !== newHref) {
           this.oldHref = newHref
           callback(newHref)
@@ -39,15 +37,13 @@ export class SyncLocationStore {
       const selector = `#${getIframeId(device.id)}`
       const iframe = document.querySelector<HTMLIFrameElement>(selector)
 
+      console.log({iframe})
+
       if (!iframe) return
 
       this.iframeListenUrlChange(iframe, url => {
-        console.log('changed', url)
-        devices.forEach(({id}) => {
-          if (id !== device.id) {
-            appStore.setUrl(url, id)
-          }
-        })
+        appStore.setUrl(url)
+        this.initialize(devices)
       })
     })
   }
