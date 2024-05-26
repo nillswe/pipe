@@ -12,12 +12,11 @@ type WindowDimensions = {
 }
 
 export class AppUIStore {
-  scale: number = 0.9
   screenPaddingY: number = 40
   screenPaddingX: number = 20
   screenPaddingSidebar: number = 90
-  viewportPos: ViewportPosition = {x: 0, y: 20}
-  zoom: number = 1
+  viewportPos: ViewportPosition = {x: 0, y: 0}
+  zoom: number = 0.9
   windowDimensions: WindowDimensions = {width: 0, height: 0}
   screenDimensions: WindowDimensions = {width: 0, height: 0}
   screensContainerRef: RefObject<HTMLDivElement> | null = null
@@ -35,10 +34,6 @@ export class AppUIStore {
     this.screensContainerRef = screensContainerRef
   }
 
-  setScale(scale: number) {
-    this.scale = scale
-  }
-
   setZoom(zoom: number) {
     this.zoom = zoom
   }
@@ -52,7 +47,7 @@ export class AppUIStore {
   }
 
   private calcDeviceHeightWithSpaces(device: Element) {
-    const realDeviceHeight = device.clientHeight * this.scale
+    const realDeviceHeight = device.clientHeight
     const verticalPaddings = this.screenPaddingY * 2
     return realDeviceHeight + verticalPaddings
   }
@@ -77,7 +72,7 @@ export class AppUIStore {
     const newScale = screenHeight / highestDevice
 
     this.setZoom(Number(newScale.toFixed(2)))
-    this.setViewportPos({x: 0, y: 20})
+    this.setViewportPos({x: 0, y: 0})
   }
 
   updateSize() {
@@ -90,7 +85,7 @@ export class AppUIStore {
 
     this.setZoom(Math.min(Math.min(percentageWidth, percentageHeigh), 1))
 
-    this.setViewportPos({x: 0, y: 20})
+    this.setViewportPos({x: 0, y: 0})
   }
 
   scrollPage(scroll: WheelEvent) {
@@ -106,26 +101,6 @@ export class AppUIStore {
     this.setViewportPos({
       x: this.viewportPos.x + scroll.deltaX * -1,
       y: this.viewportPos.y + scroll.deltaY * -1,
-    })
-  }
-
-  placeScreens() {
-    const screens = document.querySelectorAll<HTMLDivElement>('[id^=screen-]')
-
-    console.log('debug:', this.screensContainerRef?.current)
-
-    screens.forEach((screen, index) => {
-      if (index === 0) {
-        screen.style.left = `${this.screenPaddingSidebar}px`
-      } else {
-        const prevScreen = screens[index - 1]
-        const newPos =
-          prevScreen.offsetLeft +
-          prevScreen.offsetWidth * this.scale +
-          this.screenPaddingX * this.scale
-
-        screen.style.left = `${newPos}px`
-      }
     })
   }
 

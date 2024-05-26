@@ -11,7 +11,7 @@ export const ViewportContainer = ({children, posY, posX}: Props) => {
     <div
       id='viewport-container'
       style={{
-        transform: `translate3d(${posX}px, ${posY}px, 0px)`,
+        transform: `translate3d(${posX}px, ${posY}px, 0)`,
       }}>
       {children}
     </div>

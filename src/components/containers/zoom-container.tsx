@@ -11,11 +11,13 @@ export const ZoomContainer = observer(
     return (
       <div
         ref={ref}
+        className='flex flex-nowrap justify-start gap-5 p-5'
         id='zoom-container'
         data-testid='zoom-container'
         style={{
           transform: ` scale(${zoom})`,
           transformStyle: 'preserve-3d',
+          transformOrigin: 'top left',
         }}>
         {children}
       </div>

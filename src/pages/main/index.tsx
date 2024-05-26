@@ -19,7 +19,7 @@ export const MainPage = observer(() => {
       onWheel={event => appUIStore.onZoom(event)}>
       <Sidebar />
 
-      <div
+      <section
         id='content-container'
         className='flex w-full h-screen overflow-hidden relative'>
         {devices.length === 0 && <DevicesNotFound />}
@@ -39,7 +39,7 @@ export const MainPage = observer(() => {
             </ZoomContainer>
           </ViewportContainer>
         )}
-      </div>
+      </section>
     </main>
   )
 })

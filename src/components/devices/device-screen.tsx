@@ -2,7 +2,6 @@ import {Device} from '@/domain/models'
 import {observer} from 'mobx-react-lite'
 import {X} from 'lucide-react'
 import {appStore} from '@/store/app-store'
-import {appUIStore} from '@/store/app-ui-store'
 import {merge} from '@/utils'
 import {useToggle} from '@uidotdev/usehooks'
 
@@ -21,18 +20,14 @@ export const DeviceScreen = observer(({src, device: device}: Props) => {
   return (
     <div
       id={`screen-${device.id}`}
-      className={merge('bg-white flex flex-col absolute')}
+      className={merge('bg-white flex flex-col relative mt-10')}
       style={{
         width: device.width,
         height: device.height,
-        top: '40px',
-        transform: `scale(${appUIStore.scale})`,
-        transformOrigin: '0px 0px',
       }}>
-      <div className='w-full h-10 bg-base-200 absolute -top-12 flex items-center px-2 justify-between'>
-        <span className=''>
-          {device.name} | {device.width}px x {device.height}px | scale:{' '}
-          {appUIStore.scale.toFixed(2)}
+      <div className='w-full h-8 bg-base-200 absolute -top-10 flex items-center px-2 justify-between'>
+        <span className='text-xs'>
+          {device.name} | {device.width}px x {device.height}px
         </span>
 
         <span></span>
@@ -61,8 +56,8 @@ export const DeviceScreen = observer(({src, device: device}: Props) => {
             sandbox='allow-scripts allow-forms allow-same-origin allow-presentation'
             allow='web-share'
             className={merge([
-              'w-full h-full border border-primary pointer-events-none',
-              isFrameActive && 'pointer-events-auto',
+              'w-full h-full border-2 border-base-300 pointer-events-none',
+              isFrameActive && 'pointer-events-auto border-primary border-2',
             ])}
             style={{height: device.height}}
           />
