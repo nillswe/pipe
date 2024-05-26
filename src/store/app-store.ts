@@ -7,6 +7,8 @@ export class AppStore {
   url: string = ''
   devices: Device[] = []
 
+  isSynLocationOn: boolean = true
+
   constructor() {
     makeAutoObservable(this)
   }

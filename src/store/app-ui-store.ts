@@ -1,3 +1,4 @@
+import {Device} from '@/domain/models'
 import {appStore} from '@/store/app-store'
 import {autorun, makeAutoObservable} from 'mobx'
 import {WheelEvent as ReactWheelEvent, RefObject} from 'react'
@@ -123,6 +124,7 @@ export class AppUIStore {
       const href = getUrl()
 
       if (lastDispatched !== href && !isFirstLoad) {
+        console.log('dispatch')
         callback(href)
         lastDispatched = href
       } else {
@@ -141,15 +143,14 @@ export class AppUIStore {
     })
   }
 
-  syncLocation() {
-    const id = '#screen-23da0cd9-3051-45ec-a54d-360bbc01b749 iframe'
-    const iframe = document.querySelector<HTMLIFrameElement>(id)
+  syncLocation(devices: Device[]) {
+    devices.forEach(device => {
+      const selector = `#screen-${device.id} iframe`
+      const iframe = document.querySelector<HTMLIFrameElement>(selector)
 
-    if (!iframe) return
+      if (!iframe) return
 
-    this.iframeListenUrlChange(iframe, url => {
-      console.log('load', url)
-      appStore.setUrl(url)
+      this.iframeListenUrlChange(iframe, url => appStore.setUrl(url))
     })
   }
 }

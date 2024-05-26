@@ -3,6 +3,8 @@ import {appUIStore} from '@/store/app-ui-store'
 import {useEffect} from 'react'
 
 export const useAppListeners = () => {
+  const {devices} = appStore
+
   useEffect(() => {
     window.addEventListener('resize', () => appUIStore.updateSize())
     window.addEventListener('wheel', event => appUIStore.scrollPage(event))
@@ -14,10 +16,12 @@ export const useAppListeners = () => {
   }, [])
 
   useEffect(() => {
-    appStore.initialize().then(() => {
-      appUIStore.syncLocation()
-    })
+    appStore.initialize()
   }, [])
+
+  useEffect(() => {
+    appUIStore.syncLocation(devices)
+  }, [devices])
 
   return {}
 }
