@@ -1,6 +1,5 @@
 import {Device} from '@/domain/models'
-import {appStore} from '@/store/app-store'
-import {getIframeBody, getIframeHref, getIframeId} from '@/utils'
+import {getIframeBody, getIframeElem, getIframeHref} from '@/utils'
 import {makeAutoObservable} from 'mobx'
 
 export class SyncLocationStore {
@@ -10,40 +9,60 @@ export class SyncLocationStore {
     makeAutoObservable(this)
   }
 
+  private iframeObserver(
+    iframe: HTMLIFrameElement,
+    callback: (url: string) => void,
+  ) {
+    console.log('iframeObserver')
+
+    this.oldHref = getIframeHref(iframe)
+    const body = getIframeBody(iframe)
+    if (!body) return
+
+    console.log('body', body)
+
+    const observer = new MutationObserver(() => {
+      const newHref = getIframeHref(iframe)
+
+      console.log({oldHref: this.oldHref, newHref})
+
+      if (this.oldHref !== newHref) {
+        this.oldHref = newHref
+        callback(newHref)
+      }
+    })
+
+    observer.observe(body, {childList: true, subtree: true})
+  }
+
   private iframeListenUrlChange(
     iframe: HTMLIFrameElement,
     callback: (url: string) => void,
   ) {
-    iframe.contentWindow?.addEventListener('load', () => {
-      this.oldHref = getIframeHref(iframe)
-      const body = getIframeBody(iframe)
+    console.log('iframeListenUrlChange called')
 
-      const observer = new MutationObserver(() => {
-        const newHref = getIframeHref(iframe)
-
-        if (this.oldHref !== newHref) {
-          this.oldHref = newHref
-          callback(newHref)
-        }
-      })
-
-      if (!body) return
-      observer.observe(body, {childList: true, subtree: true})
-    })
+    iframe.contentWindow?.removeEventListener('load', () =>
+      this.iframeObserver(iframe, callback),
+    )
+    iframe.contentWindow?.addEventListener('load', () =>
+      this.iframeObserver(iframe, callback),
+    )
   }
 
   initialize(devices: Device[]) {
     devices.forEach(device => {
-      const selector = `#${getIframeId(device.id)}`
-      const iframe = document.querySelector<HTMLIFrameElement>(selector)
+      const iframe = getIframeElem(device.id)
+      if (!iframe) return
 
       console.log({iframe})
 
-      if (!iframe) return
-
       this.iframeListenUrlChange(iframe, url => {
-        appStore.setUrl(url)
-        this.initialize(devices)
+        devices.forEach(dev => {
+          if (dev.id !== device.id) {
+            getIframeElem(dev.id)?.contentWindow?.location.assign(url)
+            this.initialize(devices)
+          }
+        })
       })
     })
   }
