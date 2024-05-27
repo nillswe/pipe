@@ -21,13 +21,12 @@ export class AppStore {
 
   initialize() {
     return new Promise(resolve => {
-      if (isChrome()) {
-        this.setUrl(window.location.href)
-      }
-
       const defaultDevices = devices.filter(device => device?.default)
       this.setDevices(defaultDevices)
 
+      if (isChrome()) {
+        this.setUrl(window.location.href)
+      }
       return resolve(true)
     })
   }

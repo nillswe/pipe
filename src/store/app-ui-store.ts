@@ -13,11 +13,8 @@ type WindowDimensions = {
 
 export class AppUIStore {
   screenPaddingY: number = 40
-  screenPaddingX: number = 20
-  screenPaddingSidebar: number = 90
   viewportPos: ViewportPosition = {x: 0, y: 0}
   zoom: number = 0.9
-  windowDimensions: WindowDimensions = {width: 0, height: 0}
   screenDimensions: WindowDimensions = {width: 0, height: 0}
   screensContainerRef: RefObject<HTMLDivElement> | null = null
 
@@ -104,7 +101,7 @@ export class AppUIStore {
     })
   }
 
-  onZoom = (event: ReactWheelEvent<HTMLElement>) => {
+  onZoom(event: ReactWheelEvent<HTMLElement>) {
     if (!event.ctrlKey) return
 
     const ZOOM_SENSITIVITY = 400

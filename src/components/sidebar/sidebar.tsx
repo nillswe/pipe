@@ -1,11 +1,5 @@
 import {useToggle} from '@uidotdev/usehooks'
-import {
-  Link2,
-  Maximize,
-  MonitorSmartphone,
-  Mouse,
-  MousePointerClick,
-} from 'lucide-react'
+import {Link2, Maximize, Merge, MonitorSmartphone, Mouse} from 'lucide-react'
 import {SidebarButton} from '@/components/sidebar/sidebar-button'
 import {SidebarToggle} from '@/components/sidebar/sidebar-toggle'
 import {merge} from '@/utils'
@@ -13,8 +7,11 @@ import {Logo} from '@/components/brand/logo'
 import {SetLinkModal} from '@/components/set-link-modal'
 import {DevicesModal} from '@/components/devices-modal'
 import {appUIStore} from '@/store/app-ui-store'
+import {observer} from 'mobx-react-lite'
+import {syncLocationStore} from '@/store/sync-location-store'
+import {isWebApp} from '@/platforms'
 
-export const Sidebar = () => {
+export const Sidebar = observer(() => {
   const [isSidebarOpen, toggleSidebar] = useToggle(true)
   const [isLinkModalOpen, toggleLinkModal] = useToggle(false)
   const [isDevicesModalOpen, toggleDevicesModal] = useToggle(false)
@@ -56,14 +53,21 @@ export const Sidebar = () => {
             </div>
 
             <div className='tooltip tooltip-right' data-tip='Sync scroll'>
-              <SidebarButton onClick={() => appUIStore.fitToScreen()}>
+              <SidebarButton
+                disabled={isWebApp()}
+                onClick={() => appUIStore.fitToScreen()}>
                 <Mouse size={20} />
               </SidebarButton>
             </div>
 
-            <div className='tooltip tooltip-right' data-tip='Sync click'>
-              <SidebarButton onClick={() => appUIStore.fitToScreen()}>
-                <MousePointerClick size={20} />
+            <div
+              className={merge(['tooltip tooltip-right'])}
+              data-tip='Sync navigation'>
+              <SidebarButton
+                active={syncLocationStore.isSynLocationOn}
+                disabled={isWebApp()}
+                onClick={() => syncLocationStore.toggleSyncLocation()}>
+                <Merge size={20} />
               </SidebarButton>
             </div>
           </div>
@@ -75,4 +79,4 @@ export const Sidebar = () => {
       <DevicesModal isOpen={isDevicesModalOpen} onClose={toggleDevicesModal} />
     </>
   )
-}
+})
