@@ -99,7 +99,6 @@ export const Sidebar = observer(() => {
               <a
                 className='text-white'
                 href='/privacy-policy'
-                target='_blank'
                 title='Privacy policy'>
                 <SidebarButton>
                   <Info size={20} />
