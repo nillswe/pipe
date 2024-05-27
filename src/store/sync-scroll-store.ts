@@ -13,6 +13,10 @@ class SyncScrollStore {
     }
   }
 
+  toggleSyncScroll() {
+    this.isSyncScrollOn = !this.isSyncScrollOn
+  }
+
   syncScroll(device: Device) {
     const iframe = getIframeElem(device.id)!
 
@@ -28,6 +32,8 @@ class SyncScrollStore {
     })
 
     getIframeContentDoc(iframe)?.addEventListener('scroll', () => {
+      if (!this.isSyncScrollOn) return
+
       window.postMessage({
         message: 'FRAME_SCROLL',
         deviceIdOrigin: device.id,

@@ -10,6 +10,7 @@ import {appUIStore} from '@/store/app-ui-store'
 import {observer} from 'mobx-react-lite'
 import {syncLocationStore} from '@/store/sync-location-store'
 import {isWebApp} from '@/platforms'
+import {syncScrollStore} from '@/store/sync-scroll-store'
 
 export const Sidebar = observer(() => {
   const [isSidebarOpen, toggleSidebar] = useToggle(true)
@@ -55,7 +56,8 @@ export const Sidebar = observer(() => {
             <div className='tooltip tooltip-right' data-tip='Sync scroll'>
               <SidebarButton
                 disabled={isWebApp()}
-                onClick={() => appUIStore.fitToScreen()}>
+                active={syncLocationStore.isSynLocationOn}
+                onClick={() => syncScrollStore.toggleSyncScroll()}>
                 <Mouse size={20} />
               </SidebarButton>
             </div>
@@ -64,8 +66,8 @@ export const Sidebar = observer(() => {
               className={merge(['tooltip tooltip-right'])}
               data-tip='Sync navigation'>
               <SidebarButton
-                active={syncLocationStore.isSynLocationOn}
                 disabled={isWebApp()}
+                active={syncLocationStore.isSynLocationOn}
                 onClick={() => syncLocationStore.toggleSyncLocation()}>
                 <Merge size={20} />
               </SidebarButton>
