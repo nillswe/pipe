@@ -17,7 +17,7 @@ import {DevicesModal} from '@/components/devices-modal'
 import {appUIStore} from '@/store/app-ui-store'
 import {observer} from 'mobx-react-lite'
 import {syncLocationStore} from '@/store/sync-location-store'
-import {isWebApp} from '@/platforms'
+import {isChrome, isWebApp} from '@/platforms'
 import {syncScrollStore} from '@/store/sync-scroll-store'
 
 export const Sidebar = observer(() => {
@@ -98,7 +98,11 @@ export const Sidebar = observer(() => {
               data-tip='Privacy policy'>
               <a
                 className='text-white'
-                href='/privacy-policy'
+                href={
+                  isChrome()
+                    ? 'https://pipe.nullref.software/privacy-policy'
+                    : '/privacy-policy'
+                }
                 title='Privacy policy'>
                 <SidebarButton>
                   <Info size={20} />
