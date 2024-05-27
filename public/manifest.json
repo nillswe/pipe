@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "Pipe",
+  "name": "Pipe - Responsive screen viewer [Beta]",
   "author": "Null ref",
   "description": "Open multiple devices screens for test or debug a website across devices.",
   "version": "1.0",
