@@ -54,7 +54,7 @@ export const DeviceScreen = observer(({src, device: device}: Props) => {
         {src ? (
           <iframe
             id={getIframeId(device.id)}
-            onLoad={() => syncLocationStore.initialize(device)}
+            onLoad={() => syncLocationStore.syncLocation(device)}
             src={src}
             sandbox={`allow-scripts allow-forms allow-same-origin allow-presentation allow-orientation-lock allow-modals allow-popups allow-popups-to-escape-sandbox allow-pointer-lock allow-top-navigation`}
             allow='web-share'

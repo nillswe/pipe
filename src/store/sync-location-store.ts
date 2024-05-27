@@ -36,26 +36,29 @@ export class SyncLocationStore {
     })
 
     observer.observe(body, {childList: true, subtree: true, attributes: true})
+    return observer
   }
 
-  initialize(device: Device) {
-    if (!this.isSynLocationOn) return
-
+  syncLocation(device: Device) {
     const iframe = getIframeElem(device.id)!
     let gotRedirected: boolean = false
 
-    window?.addEventListener('message', event => {
+    const onMessage = (event: MessageEvent) => {
       if (event.data?.message === 'URL_CHANGED') {
         if (event.data.deviceIdOrigin !== device.id) {
-          gotRedirected = true
           iframe.contentWindow?.location.assign(event.data.data)
+          gotRedirected = true
           return
         }
         gotRedirected = false
       }
-    })
+    }
+
+    window?.addEventListener('message', onMessage)
 
     this.iframeObserver(iframe, url => {
+      if (!this.isSynLocationOn) return
+
       // prevent dispatch message after be redirected from another device
       if (!gotRedirected) {
         window.postMessage({
