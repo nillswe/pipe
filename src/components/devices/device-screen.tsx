@@ -64,10 +64,12 @@ export const DeviceScreen = observer(({src, device: device}: Props) => {
             sandbox={`allow-scripts allow-forms allow-same-origin allow-presentation allow-orientation-lock allow-modals allow-popups allow-popups-to-escape-sandbox allow-pointer-lock allow-top-navigation`}
             allow='web-share'
             className={merge([
-              'w-full h-full border-2 border-base-300 pointer-events-none overflow-auto',
-              isFrameActive && 'pointer-events-auto border-primary border-2',
+              'border-2 border-base-300 ',
+              isFrameActive
+                ? 'pointer-events-auto border-primary border-[3px]'
+                : 'pointer-events-none',
             ])}
-            style={{height: device.height}}
+            style={{width: device.width, height: device.height}}
           />
         ) : (
           <div className=' flex items-center justify-center h-full w-full text-base-100'>

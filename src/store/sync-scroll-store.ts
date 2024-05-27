@@ -21,20 +21,21 @@ class SyncScrollStore {
     const iframe = getIframeElem(device.id)!
     let isBeingControlled = false
 
-    window.addEventListener('message', event => {
+    const onMessage = (event: MessageEvent) => {
       if (event.data?.message === 'FRAME_SCROLL') {
         if (event.data?.deviceIdOrigin !== device.id) {
           getIframeDocElement(iframe)?.scrollTo({
-            top: event.data.data.top,
-            left: event.data.data.left,
+            top: event.data.top,
+            left: event.data.left,
           })
           isBeingControlled = true
           return
         }
-
         isBeingControlled = false
       }
-    })
+    }
+
+    window.addEventListener('message', onMessage)
 
     getIframeContentDoc(iframe)?.addEventListener('scroll', () => {
       if (!this.isSyncScrollOn) return
@@ -43,10 +44,8 @@ class SyncScrollStore {
       window.postMessage({
         message: 'FRAME_SCROLL',
         deviceIdOrigin: device.id,
-        data: {
-          top: getIframeDocElement(iframe)?.scrollTop ?? 0,
-          left: getIframeDocElement(iframe)?.scrollLeft ?? 0,
-        },
+        top: getIframeDocElement(iframe)?.scrollTop ?? 0,
+        left: getIframeDocElement(iframe)?.scrollLeft ?? 0,
       })
     })
   }

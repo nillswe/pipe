@@ -58,16 +58,13 @@ export class SyncLocationStore {
 
     this.iframeObserver(iframe, url => {
       if (!this.isSynLocationOn) return
+      if (gotRedirected) return // prevent dispatch message after be redirected from another device
 
-      // prevent dispatch message after be redirected from another device
-      // Redirect loop
-      if (!gotRedirected) {
-        window.postMessage({
-          message: 'URL_CHANGED',
-          deviceIdOrigin: device.id,
-          data: url,
-        })
-      }
+      window.postMessage({
+        message: 'URL_CHANGED',
+        deviceIdOrigin: device.id,
+        data: url,
+      })
     })
   }
 }
