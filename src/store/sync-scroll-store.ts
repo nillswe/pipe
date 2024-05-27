@@ -19,12 +19,13 @@ class SyncScrollStore {
 
   syncScroll(device: Device) {
     const iframe = getIframeElem(device.id)!
+    const iframeDocElem = getIframeDocElement(iframe)
     let isBeingControlled = false
 
     const onMessage = (event: MessageEvent) => {
       if (event.data?.message === 'FRAME_SCROLL') {
         if (event.data?.deviceIdOrigin !== device.id) {
-          getIframeDocElement(iframe)?.scrollTo({
+          iframeDocElem?.scrollTo({
             top: event.data.top,
             left: event.data.left,
           })
@@ -44,8 +45,8 @@ class SyncScrollStore {
       window.postMessage({
         message: 'FRAME_SCROLL',
         deviceIdOrigin: device.id,
-        top: getIframeDocElement(iframe)?.scrollTop ?? 0,
-        left: getIframeDocElement(iframe)?.scrollLeft ?? 0,
+        top: iframeDocElem?.scrollTop ?? 0,
+        left: iframeDocElem?.scrollLeft ?? 0,
       })
     })
   }

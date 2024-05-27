@@ -56,7 +56,7 @@ export const Sidebar = observer(() => {
             <div className='tooltip tooltip-right' data-tip='Sync scroll'>
               <SidebarButton
                 disabled={isWebApp()}
-                active={syncLocationStore.isSynLocationOn}
+                active={syncScrollStore.isSyncScrollOn}
                 onClick={() => syncScrollStore.toggleSyncScroll()}>
                 <Mouse size={20} />
               </SidebarButton>
