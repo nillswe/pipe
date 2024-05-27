@@ -1,5 +1,12 @@
 import {useToggle} from '@uidotdev/usehooks'
-import {Link2, Maximize, Merge, MonitorSmartphone, Mouse} from 'lucide-react'
+import {
+  HandHeart,
+  Link2,
+  Maximize,
+  Merge,
+  MonitorSmartphone,
+  Mouse,
+} from 'lucide-react'
 import {SidebarButton} from '@/components/sidebar/sidebar-button'
 import {SidebarToggle} from '@/components/sidebar/sidebar-toggle'
 import {merge} from '@/utils'
@@ -29,9 +36,9 @@ export const Sidebar = observer(() => {
           ])}>
           <div
             className={merge([
-              'flex flex-col items-center gap-2 flex-1',
+              'flex flex-col items-center gap-2 flex-1 pb-12',
               isSidebarOpen &&
-                '[&>div>button>svg]:animate-fadeUp [&>h1]:animate-fadeUp [&>*:nth-child(1)]:[animation-delay:100ms] [&>*:nth-child(2)>button>svg]:[animation-delay:150ms] [&>*:nth-child(3)>button>svg]:[animation-delay:200ms] [&>*:nth-child(4)>button>svg]:[animation-delay:250ms] [&>*:nth-child(5)>button>svg]:[animation-delay:300ms]',
+                '[&>div_button>svg]:animate-fadeUp [&>h1]:animate-fadeUp [&>*:nth-child(1)]:[animation-delay:100ms] [&>*:nth-child(2)>button>svg]:[animation-delay:150ms] [&>*:nth-child(3)>button>svg]:[animation-delay:200ms] [&>*:nth-child(4)>button>svg]:[animation-delay:250ms] [&>*:nth-child(5)>button>svg]:[animation-delay:300ms] [&>*:nth-child(6)_button>svg]:[animation-delay:350ms]',
             ])}>
             <Logo />
 
@@ -71,6 +78,19 @@ export const Sidebar = observer(() => {
                 onClick={() => syncLocationStore.toggleSyncLocation()}>
                 <Merge size={20} />
               </SidebarButton>
+            </div>
+            <div
+              className={merge(['tooltip tooltip-right mt-auto'])}
+              data-tip='Support the app'>
+              <a
+                className='text-white'
+                href='https://donate.stripe.com/7sI7un2ht3218bSaEF'
+                target='_blank'
+                title='support the app'>
+                <SidebarButton>
+                  <HandHeart size={20} />
+                </SidebarButton>
+              </a>
             </div>
           </div>
         </div>
