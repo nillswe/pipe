@@ -60,6 +60,7 @@ export class SyncLocationStore {
       if (!this.isSynLocationOn) return
 
       // prevent dispatch message after be redirected from another device
+      // Redirect loop
       if (!gotRedirected) {
         window.postMessage({
           message: 'URL_CHANGED',
