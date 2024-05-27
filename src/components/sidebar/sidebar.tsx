@@ -1,6 +1,7 @@
 import {useToggle} from '@uidotdev/usehooks'
 import {
   HandHeart,
+  Info,
   Link2,
   Maximize,
   Merge,
@@ -89,6 +90,19 @@ export const Sidebar = observer(() => {
                 title='support the app'>
                 <SidebarButton>
                   <HandHeart size={20} />
+                </SidebarButton>
+              </a>
+            </div>
+            <div
+              className={merge(['tooltip tooltip-right'])}
+              data-tip='Privacy policy'>
+              <a
+                className='text-white'
+                href='/privacy-policy'
+                target='_blank'
+                title='Privacy policy'>
+                <SidebarButton>
+                  <Info size={20} />
                 </SidebarButton>
               </a>
             </div>
