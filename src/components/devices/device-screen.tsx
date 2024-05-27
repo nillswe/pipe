@@ -54,7 +54,6 @@ export const DeviceScreen = observer(({src, device: device}: Props) => {
         }}>
         {src ? (
           <iframe
-            scrolling='yes'
             id={getIframeId(device.id)}
             onLoad={() => {
               syncLocationStore.syncLocation(device)
